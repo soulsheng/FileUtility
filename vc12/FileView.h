@@ -2,6 +2,7 @@
 #pragma once
 
 #include "ViewTree.h"
+#include "commonDefinitionFile.h"
 
 class CFileViewToolBar : public CMFCToolBar
 {
@@ -29,12 +30,17 @@ protected:
 	CImageList m_FileViewImages;
 	CFileViewToolBar m_wndToolBar;
 
+	HTREEITEM	m_hRoot;
+
 protected:
 	void FillFileView();
 
 // й╣ож
 public:
 	virtual ~CFileView();
+
+	void	createRootItem();
+	void	AddBranch(tstring name);
 
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

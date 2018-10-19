@@ -76,7 +76,9 @@ int CFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
 
 	// 填入一些静态树视图数据(此处只需填入虚拟代码，而不是复杂的数据)
-	FillFileView();
+	//FillFileView();
+	createRootItem();
+
 	AdjustLayout();
 
 	return 0;
@@ -253,4 +255,20 @@ void CFileView::OnChangeVisualStyle()
 	m_wndFileView.SetImageList(&m_FileViewImages, TVSIL_NORMAL);
 }
 
+void CFileView::createRootItem()
+{
+	m_hRoot = m_wndFileView.InsertItem(_T("文件列表"), 0, 0);
+	m_wndFileView.SetItemState(m_hRoot, TVIS_BOLD, TVIS_BOLD);
+}
+
+void CFileView::AddBranch(tstring name)
+{
+	HTREEITEM item = m_wndFileView.InsertItem(name.c_str(), 2, 2, m_hRoot);
+	m_wndFileView.Expand(m_hRoot, TVE_EXPAND);
+
+	m_wndFileView.SelectItem(item);
+
+	CMainFrame* pFrame = (CMainFrame *)AfxGetMainWnd();
+	OnSetFocus(pFrame);
+}
 

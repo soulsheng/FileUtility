@@ -42,6 +42,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnCollectFiles2Root();
+	afx_msg void OnGetFileList();
+
+public:
+	void	outputInfo(const TCHAR* message, int value = -1);	// print to output window or status bar
+	void	AddFileViewBranch(tstring fileNameShort);
+
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

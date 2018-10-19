@@ -9,6 +9,8 @@
 #include "FileUtility.h"
 #endif
 
+#include "MainFrm.h"
+
 #include "FileUtilityDoc.h"
 #include "FileUtilityView.h"
 
@@ -28,6 +30,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_COMMAND(ID_COLLECT_FILES_2ROOT, &CFileUtilityView::OnCollectFiles2Root)
+	ON_COMMAND(ID_GET_FILE_LIST, &CFileUtilityView::OnGetFileList)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -103,8 +106,27 @@ CFileUtilityDoc* CFileUtilityView::GetDocument() const // 非调试版本是内联的
 void CFileUtilityView::OnCollectFiles2Root()
 {
 	// TODO:  在此添加命令处理程序代码
-	//CFileUtilityMFC::openFileDialog(_T("*.jpg;*.jpeg"), _T("jpg格式图片"), this);
+	
 
+}
+
+void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)
+{
+	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
+
+	tstream os;
+	os << message;
+
+	if (-1 != value)
+		os << _T(" = ") << value;
+
+	pMFram->FillBuildWindow(os.str());
+}
+
+
+void CFileUtilityView::OnGetFileList()
+{
+	// TODO:  在此添加命令处理程序代码
 	tstring		imagePath;
 
 	CFileUtilityWIN::getFilePathFromDialog(imagePath);
@@ -116,4 +138,16 @@ void CFileUtilityView::OnCollectFiles2Root()
 
 	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpeg"), imageList);
 
+	outputInfo(imagePath.c_str());
+	for each (tstring file in imageList)
+	{
+		outputInfo(file.c_str());
+		AddFileViewBranch(file);
+	}
+}
+void CFileUtilityView::AddFileViewBranch(tstring fileNameShort)
+{
+	// MainFrame
+	CMainFrame *pMain = (CMainFrame *)AfxGetMainWnd();
+	pMain->AddFileViewBranch(fileNameShort);
 }
