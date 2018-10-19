@@ -12,6 +12,9 @@
 #include "FileUtilityDoc.h"
 #include "FileUtilityView.h"
 
+#include "CFileUtilityMFC.h"
+#include "CFileUtilityWIN.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -24,6 +27,7 @@ IMPLEMENT_DYNCREATE(CFileUtilityView, CView)
 BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+	ON_COMMAND(ID_COLLECT_FILES_2ROOT, &CFileUtilityView::OnCollectFiles2Root)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -94,3 +98,22 @@ CFileUtilityDoc* CFileUtilityView::GetDocument() const // 非调试版本是内联的
 
 
 // CFileUtilityView 消息处理程序
+
+
+void CFileUtilityView::OnCollectFiles2Root()
+{
+	// TODO:  在此添加命令处理程序代码
+	//CFileUtilityMFC::openFileDialog(_T("*.jpg;*.jpeg"), _T("jpg格式图片"), this);
+
+	tstring		imagePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(imagePath);
+
+	if (imagePath.empty())
+		return;
+
+	std::vector<tstring>		imageList;
+
+	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpeg"), imageList);
+
+}

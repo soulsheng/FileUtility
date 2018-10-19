@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{59f0a7d4-c121-46e4-ba4b-47d0236d7505}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -54,6 +57,18 @@
     <ClInclude Include="PropertiesWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\CFileUtilitySTL.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\CFileUtilityMFC.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\CFileUtilityWIN.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\commonDefinitionFile.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileUtility.cpp">
@@ -85,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CFileUtilitySTL.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CFileUtilityMFC.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CFileUtilityWIN.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

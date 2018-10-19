@@ -53,6 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./;../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -99,6 +100,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\CFileUtilityMFC.h" />
+    <ClInclude Include="..\common\CFileUtilitySTL.h" />
+    <ClInclude Include="..\common\CFileUtilityWIN.h" />
+    <ClInclude Include="..\common\commonDefinitionFile.h" />
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="FileUtility.h" />
     <ClInclude Include="FileUtilityDoc.h" />
@@ -113,6 +118,9 @@
     <ClInclude Include="ViewTree.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\CFileUtilityMFC.cpp" />
+    <ClCompile Include="..\common\CFileUtilitySTL.cpp" />
+    <ClCompile Include="..\common\CFileUtilityWIN.cpp" />
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="FileUtility.cpp" />
     <ClCompile Include="FileUtilityDoc.cpp" />
@@ -163,4 +171,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="FileUtility.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

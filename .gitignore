@@ -3,3 +3,5 @@
 *.sdf
 *ipch
 *.suo
+/vc12/*.opensdf
+/vc12/*.aps

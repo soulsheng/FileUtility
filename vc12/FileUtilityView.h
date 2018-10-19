@@ -40,6 +40,8 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnCollectFiles2Root();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本
