@@ -2,6 +2,10 @@
 #include "stdafx.h"
 #include "ViewTree.h"
 
+#include "mainfrm.h"
+#include "FileUtilityDoc.h"
+#include "FileUtilityView.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -19,7 +23,26 @@ CViewTree::~CViewTree()
 {
 }
 
+void CViewTree::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
+{
+
+	HTREEITEM hTreeItem = GetSelectedItem();
+	CString name = GetItemText(hTreeItem);
+
+	CMainFrame* pFrame = (CMainFrame *)AfxGetMainWnd();
+	CFileUtilityView* pView = (CFileUtilityView *)pFrame->GetActiveView();
+
+	if (!pView)
+		return;
+
+	pView->switchBilViewByName(name.GetBuffer(0));
+
+	*pResult = 0;
+
+}
+
 BEGIN_MESSAGE_MAP(CViewTree, CTreeCtrl)
+	ON_NOTIFY_REFLECT(TVN_SELCHANGED, &CViewTree::OnSelChanged)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

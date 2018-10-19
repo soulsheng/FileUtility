@@ -1,8 +1,11 @@
 
 #pragma once 
 
+#include <functional>
 #include <vector>
 #include <string>
+#include <map>
+
 #include <sstream>
 
 #ifdef _UNICODE
@@ -14,4 +17,8 @@
 #define tstream std::ostringstream
 
 #endif
+
+
+typedef std::pair<tstring, tstring>	FilesPair;
+typedef std::map<tstring, tstring>	FilesMap;
 

@@ -5,12 +5,15 @@
 void CFileUtilityWIN::getFileListFromPath(tstring &path, tstring fmt, std::vector<tstring> &list)
 {
 	tstring csDirPath = path + _T("*.") + fmt;
-	HANDLE file;
+	HANDLE file=0;
 	WIN32_FIND_DATA fileData;
 	char line[1024];
 	char fn[1000];
 	//mbstowcs(fn,csDirPath.GetBuffer(),999);
 	file = FindFirstFile(csDirPath.c_str(), &fileData);
+	if (INVALID_HANDLE_VALUE == file)
+		return;
+
 	list.push_back(fileData.cFileName);
 	bool bState = false;
 	bState = FindNextFile(file, &fileData);

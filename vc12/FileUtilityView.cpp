@@ -31,6 +31,8 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_WM_RBUTTONUP()
 	ON_COMMAND(ID_COLLECT_FILES_2ROOT, &CFileUtilityView::OnCollectFiles2Root)
 	ON_COMMAND(ID_GET_FILE_LIST, &CFileUtilityView::OnGetFileList)
+	ON_WM_TIMER()
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -63,6 +65,20 @@ void CFileUtilityView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO:  在此处为本机数据添加绘制代码
+	if (image.IsNull())
+		return;
+
+	CRect rect;
+	CDC *pDC = this->GetDC();
+	GetClientRect(rect);
+	HDC hDC = pDC->GetSafeHdc();
+
+	::SetStretchBltMode(hDC, HALFTONE);
+	::SetBrushOrgEx(hDC, 0, 0, NULL);
+
+	image.Draw(hDC, rect);
+
+	ReleaseDC(pDC);//释放picture控件的DC
 }
 
 void CFileUtilityView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -136,11 +152,13 @@ void CFileUtilityView::OnGetFileList()
 
 	std::vector<tstring>		imageList;
 
-	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpeg"), imageList);
+	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpg"), imageList);
 
 	outputInfo(imagePath.c_str());
 	for each (tstring file in imageList)
 	{
+		m_FilesMap.insert(FilesPair(file, imagePath + file));
+
 		outputInfo(file.c_str());
 		AddFileViewBranch(file);
 	}
@@ -150,4 +168,36 @@ void CFileUtilityView::AddFileViewBranch(tstring fileNameShort)
 	// MainFrame
 	CMainFrame *pMain = (CMainFrame *)AfxGetMainWnd();
 	pMain->AddFileViewBranch(fileNameShort);
+}
+
+void CFileUtilityView::switchBilViewByName(tstring name)
+{
+	tstring filepath = m_FilesMap[name];
+	if (filepath.empty())
+		return;
+
+	if (!image.IsNull())
+		image.Destroy();
+
+	image.Load(filepath.c_str());
+}
+
+void CFileUtilityView::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	OnDraw(NULL);
+
+	CView::OnTimer(nIDEvent);
+}
+
+
+int CFileUtilityView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  在此添加您专用的创建代码
+	SetTimer(0, 30, NULL);	//定时显示，一个30毫秒触发一次的定时器，30帧/秒 
+
+	return 0;
 }
