@@ -13,3 +13,22 @@ tstring CFileUtilitySTL::getPathFileName(tstring& fullpath)
 	return fullpath.substr(0, indexEnd + 1);
 }
 
+void CFileUtilitySTL::writeFilelist(tstring filename, FilesMap& filesMap)
+{
+	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+	std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+	tfstream fileOut(filename);
+
+	for (FilesMap::iterator itr = filesMap.begin(); itr != filesMap.end(); itr++)
+	{
+		fileOut << itr->second << std::endl;
+	}
+
+	fileOut.close();
+	
+
+	std::locale::global(oPreviousLocale);
+
+}
+

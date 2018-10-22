@@ -16,6 +16,7 @@
 
 #include "CFileUtilityMFC.h"
 #include "CFileUtilityWIN.h"
+#include "CFileUtilitySTL.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -163,7 +164,10 @@ void CFileUtilityView::OnGetFileListNest()
 		outputInfo(file.c_str());
 		AddFileViewBranch(file);
 	}
+
+	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
 }
+
 void CFileUtilityView::AddFileViewBranch(tstring fileNameShort)
 {
 	// MainFrame
@@ -226,4 +230,6 @@ void CFileUtilityView::OnGetFileList()
 		outputInfo(file.c_str());
 		AddFileViewBranch(file);
 	}
+
+	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
 }

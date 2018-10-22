@@ -13,5 +13,6 @@ public:
 
 	static tstring getPathFileName(tstring& fullpath);
 
+	static void		writeFilelist(tstring filename, FilesMap& filesMap);
 
 };
