@@ -33,6 +33,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_GET_FILE_LIST, &CFileUtilityView::OnGetFileList)
 	ON_WM_TIMER()
 	ON_WM_CREATE()
+	ON_COMMAND(ID_GET_FILE_LIST_NEST, &CFileUtilityView::OnGetFileListNest)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -140,7 +141,7 @@ void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)
 }
 
 
-void CFileUtilityView::OnGetFileList()
+void CFileUtilityView::OnGetFileListNest()
 {
 	// TODO:  在此添加命令处理程序代码
 	tstring		imagePath;
@@ -152,7 +153,7 @@ void CFileUtilityView::OnGetFileList()
 
 	std::vector<tstring>		imageList;
 
-	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpg"), imageList);
+	CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), _T("jpg"), imageList);
 
 	outputInfo(imagePath.c_str());
 	for each (tstring file in imageList)
@@ -200,4 +201,29 @@ int CFileUtilityView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetTimer(0, 30, NULL);	//定时显示，一个30毫秒触发一次的定时器，30帧/秒 
 
 	return 0;
+}
+
+
+void CFileUtilityView::OnGetFileList()
+{
+	// TODO:  在此添加命令处理程序代码
+	tstring		imagePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(imagePath);
+
+	if (imagePath.empty())
+		return;
+
+	std::vector<tstring>		imageList;
+
+	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpg"), imageList);
+
+	outputInfo(imagePath.c_str());
+	for each (tstring file in imageList)
+	{
+		m_FilesMap.insert(FilesPair(file, imagePath + file));
+
+		outputInfo(file.c_str());
+		AddFileViewBranch(file);
+	}
 }

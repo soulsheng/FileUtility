@@ -11,10 +11,14 @@
 #ifdef _UNICODE
 #define tstring std::wstring
 #define tstream std::wostringstream
+#define tstrstr	std::wcsstr
+#define tstrcmp	std::wcscmp
 
 #else
 #define tstring std::string
 #define tstream std::ostringstream
+#define tstrstr	std::strstr
+#define tstrcmp	std::strcmp
 
 #endif
 

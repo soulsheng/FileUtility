@@ -26,6 +26,37 @@ void CFileUtilityWIN::getFileListFromPath(tstring &path, tstring fmt, std::vecto
 
 }
 
+void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, tstring fmt, std::vector<tstring> &list)
+{
+	tstring csDirPath = path + pathSub + _T("\\*.*");// +fmt;
+	HANDLE file=0;
+	WIN32_FIND_DATA fileData;
+
+	//mbstowcs(fn,csDirPath.GetBuffer(),999);
+	file = FindFirstFile(csDirPath.c_str(), &fileData);
+	if (INVALID_HANDLE_VALUE == file)
+		return;
+
+	do
+	{
+		if (!(fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))//判断查找的是不是文件夹，通过位于运算，dwFileAttributes有很多属性
+		{
+			if (NULL != tstrstr(fileData.cFileName, fmt.c_str()))
+				list.push_back(pathSub + _T("\\") + fileData.cFileName);
+		}
+		else
+		{
+			if (!tstrcmp(_T("."), fileData.cFileName) || !tstrcmp(_T(".."), fileData.cFileName) )
+				continue;
+
+			getFileListFromPathNest(path, fileData.cFileName, fmt, list);
+		}
+
+	} while (FindNextFile(file, &fileData));
+	
+
+}
+
 void CFileUtilityWIN::getFilePathFromDialog(tstring &path)
 {
 	BROWSEINFO bi;

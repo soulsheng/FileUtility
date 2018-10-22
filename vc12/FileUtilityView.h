@@ -56,6 +56,7 @@ protected:
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnGetFileListNest();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

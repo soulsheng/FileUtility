@@ -227,6 +227,7 @@ BEGIN
     BEGIN
         MENUITEM "收集文件到根目录",                    ID_COLLECT_FILES_2ROOT
         MENUITEM "获取文件列表",                      ID_GET_FILE_LIST
+        MENUITEM "获取文件列表嵌套",                    ID_GET_FILE_LIST_NEST
     END
 END
 
