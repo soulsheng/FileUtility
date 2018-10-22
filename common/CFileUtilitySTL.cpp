@@ -22,7 +22,7 @@ void CFileUtilitySTL::writeFilelist(tstring filename, FilesMap& filesMap)
 
 	for (FilesMap::iterator itr = filesMap.begin(); itr != filesMap.end(); itr++)
 	{
-		fileOut << itr->second << std::endl;
+		fileOut << itr->first << std::endl;
 	}
 
 	fileOut.close();

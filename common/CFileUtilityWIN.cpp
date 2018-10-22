@@ -41,15 +41,20 @@ void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, tst
 	{
 		if (!(fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))//判断查找的是不是文件夹，通过位于运算，dwFileAttributes有很多属性
 		{
-			if (NULL != tstrstr(fileData.cFileName, fmt.c_str()))
-				list.push_back(pathSub + _T("\\") + fileData.cFileName);
+			tstring filename(fileData.cFileName);
+			transform(filename.begin(), filename.end(), filename.begin(), toupper);
+			transform(fmt.begin(), fmt.end(), fmt.begin(), toupper);
+
+			if (NULL != tstrstr(filename.c_str(), fmt.c_str()))
+				list.push_back(pathSub + _T("/") + fileData.cFileName);
 		}
 		else
 		{
 			if (!tstrcmp(_T("."), fileData.cFileName) || !tstrcmp(_T(".."), fileData.cFileName) )
 				continue;
 
-			getFileListFromPathNest(path, fileData.cFileName, fmt, list);
+			tstring pathSubNest = pathSub + _T("/") + fileData.cFileName;
+			getFileListFromPathNest(path, pathSubNest, fmt, list);
 		}
 
 	} while (FindNextFile(file, &fileData));

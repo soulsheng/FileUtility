@@ -156,6 +156,9 @@ void CFileUtilityView::OnGetFileListNest()
 
 	CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), _T("jpg"), imageList);
 
+	if (imageList.empty())
+		return;
+
 	outputInfo(imagePath.c_str());
 	for each (tstring file in imageList)
 	{
@@ -164,6 +167,12 @@ void CFileUtilityView::OnGetFileListNest()
 		outputInfo(file.c_str());
 		AddFileViewBranch(file);
 	}
+
+	if (!image.IsNull())
+		image.Destroy();
+
+	tstring filepath = imagePath + m_FilesMap.rbegin()->first;
+	image.Load(filepath.c_str());
 
 	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
 }
