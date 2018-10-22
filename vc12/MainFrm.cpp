@@ -256,9 +256,9 @@ void CMainFrame::FillBuildWindow(tstring& msg)
 	m_wndOutput.FillBuildWindow(msg);
 }
 
-void CMainFrame::AddFileViewBranch(tstring name)
+void CMainFrame::AddFileViewBranch(tstring name, tstring root)
 {
-	m_wndFileView.AddBranch(name);
+	m_wndFileView.AddBranch(name, root);
 }
 
 // CMainFrame ’Ô∂œ

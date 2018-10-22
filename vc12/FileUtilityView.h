@@ -41,12 +41,12 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnCollectFiles2Root();
+	afx_msg void OnGenerateTrainList();
 	afx_msg void OnGetFileList();
 
 public:
 	void	outputInfo(const TCHAR* message, int value = -1);	// print to output window or status bar
-	void	AddFileViewBranch(tstring fileNameShort);
+	void	AddFileViewBranch(tstring fileNameShort, tstring root=_T("") );
 	void	switchBilViewByName(tstring name);
 
 protected:

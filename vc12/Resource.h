@@ -85,7 +85,7 @@
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
 #define ID_32771                        32771
-#define ID_COLLECT_FILES_2ROOT          32772
+#define ID_GENERATE_TRAIN_LIST          32772
 #define ID_32773                        32773
 #define ID_GET_FILE_LIST                32774
 #define ID_32775                        32775

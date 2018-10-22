@@ -4,6 +4,10 @@
 #include "ViewTree.h"
 #include "commonDefinitionFile.h"
 
+
+typedef std::pair<tstring, HTREEITEM>	FileItemRootsPair;
+typedef std::map<tstring, HTREEITEM>	FileItemRootsMap;
+
 class CFileViewToolBar : public CMFCToolBar
 {
 	virtual void OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL bDisableIfNoHndler)
@@ -31,6 +35,7 @@ protected:
 	CFileViewToolBar m_wndToolBar;
 
 	HTREEITEM	m_hRoot;
+	FileItemRootsMap	m_hRootsMap;
 
 protected:
 	void FillFileView();
@@ -40,7 +45,7 @@ public:
 	virtual ~CFileView();
 
 	void	createRootItem();
-	void	AddBranch(tstring name);
+	void	AddBranch(tstring name, tstring root);
 
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

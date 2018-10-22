@@ -97,3 +97,29 @@ void CFileUtilityWIN::getFilePathFromDialog(tstring &path)
 		imalloc->Release();
 	}
 }
+
+void CFileUtilityWIN::getSubPathFromPath(tstring &path, std::vector<tstring> &list)
+{
+	tstring csDirPath = path + _T("\\*.*");// +fmt;
+	HANDLE file = 0;
+	WIN32_FIND_DATA fileData;
+
+	//mbstowcs(fn,csDirPath.GetBuffer(),999);
+	file = FindFirstFile(csDirPath.c_str(), &fileData);
+	if (INVALID_HANDLE_VALUE == file)
+		return;
+
+	do
+	{
+		if (fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)//判断查找的是不是文件夹，通过位于运算，dwFileAttributes有很多属性
+		{
+
+			if (!tstrcmp(_T("."), fileData.cFileName) || !tstrcmp(_T(".."), fileData.cFileName))
+				continue;
+
+			list.push_back(fileData.cFileName);
+		}
+
+	} while (FindNextFile(file, &fileData));
+
+}

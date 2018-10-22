@@ -30,7 +30,7 @@ IMPLEMENT_DYNCREATE(CFileUtilityView, CView)
 BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
-	ON_COMMAND(ID_COLLECT_FILES_2ROOT, &CFileUtilityView::OnCollectFiles2Root)
+	ON_COMMAND(ID_GENERATE_TRAIN_LIST, &CFileUtilityView::OnGenerateTrainList)
 	ON_COMMAND(ID_GET_FILE_LIST, &CFileUtilityView::OnGetFileList)
 	ON_WM_TIMER()
 	ON_WM_CREATE()
@@ -121,10 +121,45 @@ CFileUtilityDoc* CFileUtilityView::GetDocument() const // 非调试版本是内联的
 // CFileUtilityView 消息处理程序
 
 
-void CFileUtilityView::OnCollectFiles2Root()
+void CFileUtilityView::OnGenerateTrainList()
 {
 	// TODO:  在此添加命令处理程序代码
+	tstring		imagePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(imagePath);
+
+	if (imagePath.empty())
+		return;
+
+	std::vector<tstring>		subPathList;
+
+	CFileUtilityWIN::getSubPathFromPath(imagePath, subPathList);
+
+	outputInfo(imagePath.c_str());
+	for each (tstring subPath in subPathList)
+	{
 	
+		std::vector<tstring>		imageList;
+		m_FilesMap.clear();
+
+		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/") + subPath, _T(""), _T("jpg"), imageList);
+
+		for each (tstring file in imageList)
+		{
+			m_FilesMap.insert(FilesPair(file, imagePath + file));
+
+			outputInfo(file.c_str());
+			AddFileViewBranch(file, subPath);
+		}
+
+		if (!image.IsNull())
+			image.Destroy();
+
+		tstring filepath = imagePath + m_FilesMap.rbegin()->first;
+		image.Load(filepath.c_str());
+
+		CFileUtilitySTL::writeFilelist(imagePath + _T("/") + subPath + _T("filelist.txt"), m_FilesMap);
+	}
 
 }
 
@@ -165,7 +200,7 @@ void CFileUtilityView::OnGetFileListNest()
 		m_FilesMap.insert(FilesPair(file, imagePath + file));
 
 		outputInfo(file.c_str());
-		AddFileViewBranch(file);
+		AddFileViewBranch(file, imagePath);
 	}
 
 	if (!image.IsNull())
@@ -177,11 +212,11 @@ void CFileUtilityView::OnGetFileListNest()
 	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
 }
 
-void CFileUtilityView::AddFileViewBranch(tstring fileNameShort)
+void CFileUtilityView::AddFileViewBranch(tstring fileNameShort, tstring root)
 {
 	// MainFrame
 	CMainFrame *pMain = (CMainFrame *)AfxGetMainWnd();
-	pMain->AddFileViewBranch(fileNameShort);
+	pMain->AddFileViewBranch(fileNameShort, root);
 }
 
 void CFileUtilityView::switchBilViewByName(tstring name)
@@ -237,7 +272,7 @@ void CFileUtilityView::OnGetFileList()
 		m_FilesMap.insert(FilesPair(file, imagePath + file));
 
 		outputInfo(file.c_str());
-		AddFileViewBranch(file);
+		AddFileViewBranch(file, imagePath);
 	}
 
 	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);

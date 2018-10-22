@@ -15,5 +15,6 @@ public:
 
 	static void getFilePathFromDialog(tstring &path);
 
+	static void getSubPathFromPath(tstring &path, std::vector<tstring> &list);
 
 };

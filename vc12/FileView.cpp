@@ -259,11 +259,33 @@ void CFileView::createRootItem()
 {
 	m_hRoot = m_wndFileView.InsertItem(_T("文件列表"), 0, 0);
 	m_wndFileView.SetItemState(m_hRoot, TVIS_BOLD, TVIS_BOLD);
+
+	m_hRootsMap.insert(FileItemRootsPair(_T("文件列表"), m_hRoot));
 }
 
-void CFileView::AddBranch(tstring name)
+void CFileView::AddBranch(tstring name, tstring root)
 {
-	HTREEITEM item = m_wndFileView.InsertItem(name.c_str(), 2, 2, m_hRoot);
+	HTREEITEM itemRoot = NULL;
+	if (root.empty())
+		itemRoot = m_hRoot;
+	else
+	{
+		FileItemRootsMap::iterator itr = m_hRootsMap.find(root);
+		if (itr!=m_hRootsMap.end())
+			itemRoot = m_hRootsMap[root];
+		else
+		{
+			HTREEITEM hRootNew = m_wndFileView.InsertItem(root.c_str(), 0, 0, m_hRoot);
+			m_wndFileView.SetItemState(hRootNew, TVIS_BOLD, TVIS_BOLD);
+			
+			m_hRootsMap.insert(FileItemRootsPair(root, hRootNew));
+
+			itemRoot = hRootNew;
+		}
+
+	}
+
+	HTREEITEM item = m_wndFileView.InsertItem(name.c_str(), 2, 2, itemRoot);
 	m_wndFileView.Expand(m_hRoot, TVE_EXPAND);
 
 	m_wndFileView.SelectItem(item);

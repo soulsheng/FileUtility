@@ -59,7 +59,7 @@ protected:
 
 public:
 	void	FillBuildWindow(tstring& msg);
-	void	AddFileViewBranch(tstring name);
+	void	AddFileViewBranch(tstring name, tstring root);
 
 };
 
