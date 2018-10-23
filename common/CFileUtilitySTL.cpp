@@ -87,3 +87,48 @@ int CFileUtilitySTL::removeFile(tstring filename)
 	return _tremove(filename.c_str());
 }
 
+bool CFileUtilitySTL::generateVal(tstring filename, tstring filenameVal)
+{
+	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+	std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+	tfstream file(filename);
+
+	StringVec lines;
+
+	//检查文件是否打开成功
+	if (!file)
+	{//如果没成功
+
+		throw runtime_error("file cannot open");
+		return false;
+	}
+	else
+	{//文件打开成功，开始进行读文件操作
+		tstring s;
+		//fstream类中也有getline成员函数，不要弄错
+		//getline(infile,s);
+		while (!file.eof())
+		{
+			getline(file, s);
+			if (s.length()>4)// ignore empty line
+				lines.push_back(s);
+		}
+	}
+	file.close();
+
+	std::srand(unsigned(time(0))); 
+	random_shuffle(lines.begin(), lines.end());
+
+	tfstream fileVal(filenameVal, ios::out);
+
+	for (StringVec::iterator itr = lines.begin(); itr != lines.end(); itr++)
+		fileVal << *itr << std::endl;
+
+	fileVal.close();
+
+	std::locale::global(oPreviousLocale);
+
+	return true;
+}
+

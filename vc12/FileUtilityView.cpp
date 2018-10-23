@@ -141,9 +141,10 @@ void CFileUtilityView::OnGenerateTrainList()
 
 	CFileUtilitySTL::convertList2Map(classMap, classList);
 
-	tstring filelistName(imagePath + _T("/train.txt"));
-	outputInfo(filelistName.c_str());
-	if (CFileUtilitySTL::removeFile(filelistName))
+	tstring filelistTrain(imagePath + _T("/train.txt"));
+	tstring filelistVal(imagePath + _T("/val.txt"));
+	outputInfo(filelistTrain.c_str());
+	if (CFileUtilitySTL::removeFile(filelistTrain))
 		outputInfo(_T("ÎÞ·¨É¾³ý"));
 	else
 		outputInfo(_T("ÒÑÉ¾³ý"));
@@ -173,9 +174,10 @@ void CFileUtilityView::OnGenerateTrainList()
 
 		//CFileUtilitySTL::writeFilelist(imagePath + _T("/") + subPath + _T("filelist.txt"), m_FilesMap, classMap[subPath]);
 		
-		CFileUtilitySTL::writeFilelist(filelistName, m_FilesMap, classMap[subPath], false);
+		CFileUtilitySTL::writeFilelist(filelistTrain, m_FilesMap, classMap[subPath], false);
 	}
 
+	CFileUtilitySTL::generateVal(filelistTrain, filelistVal);
 }
 
 void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)

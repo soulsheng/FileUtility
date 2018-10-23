@@ -23,4 +23,6 @@ public:
 	// return 0, success 
 	static int		removeFile(tstring filename);
 
+	static bool		generateVal(tstring filename, tstring filenameVal);
+
 };
