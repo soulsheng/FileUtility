@@ -18,17 +18,21 @@ using namespace std;
 #define tstream std::wostringstream
 #define tstrstr	std::wcsstr
 #define tstrcmp	std::wcscmp
-#define tfstream std::wofstream
+#define tfstream std::wfstream
 
 #else
 #define tstring std::string
 #define tstream std::ostringstream
 #define tstrstr	std::strstr
 #define tstrcmp	std::strcmp
-#define tfstream std::ofstream;
+#define tfstream std::fstream;
 
 #endif
 
+typedef std::vector<tstring>	StringVec;
+
+typedef std::pair<tstring, int>	ClassesPair;
+typedef std::map<tstring, int>	ClassesMap;
 
 typedef std::pair<tstring, tstring>	FilesPair;
 typedef std::map<tstring, tstring>	FilesMap;

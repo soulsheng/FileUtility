@@ -131,12 +131,25 @@ void CFileUtilityView::OnGenerateTrainList()
 	if (imagePath.empty())
 		return;
 
-	std::vector<tstring>		subPathList;
+	//std::vector<tstring>		subPathList;
 
-	CFileUtilityWIN::getSubPathFromPath(imagePath, subPathList);
+	//CFileUtilityWIN::getSubPathFromPath(imagePath, subPathList);
+
+	ClassesMap	classMap;
+	StringVec	classList;
+	CFileUtilitySTL::readFilelist(imagePath+_T("classIndex.txt"), classList);
+
+	CFileUtilitySTL::convertList2Map(classMap, classList);
+
+	tstring filelistName(imagePath + _T("/filelist.txt"));
+	outputInfo(filelistName.c_str());
+	if (CFileUtilitySTL::removeFile(filelistName))
+		outputInfo(_T("ÎÞ·¨É¾³ý"));
+	else
+		outputInfo(_T("ÒÑÉ¾³ý"));
 
 	outputInfo(imagePath.c_str());
-	for each (tstring subPath in subPathList)
+	for each (tstring subPath in classList)
 	{
 	
 		std::vector<tstring>		imageList;
@@ -158,7 +171,9 @@ void CFileUtilityView::OnGenerateTrainList()
 		tstring filepath = imagePath + m_FilesMap.rbegin()->first;
 		image.Load(filepath.c_str());
 
-		CFileUtilitySTL::writeFilelist(imagePath + _T("/") + subPath + _T("filelist.txt"), m_FilesMap);
+		//CFileUtilitySTL::writeFilelist(imagePath + _T("/") + subPath + _T("filelist.txt"), m_FilesMap, classMap[subPath]);
+		
+		CFileUtilitySTL::writeFilelist(imagePath + _T("/filelist.txt"), m_FilesMap, classMap[subPath], false);
 	}
 
 }
