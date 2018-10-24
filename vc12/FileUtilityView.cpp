@@ -156,7 +156,7 @@ void CFileUtilityView::OnGenerateTrainList()
 		std::vector<tstring>		imageList;
 		m_FilesMap.clear();
 
-		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/") + subPath, _T(""), _T("jpg"), imageList);
+		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/"), subPath, _T("jpg"), imageList);
 
 		for each (tstring file in imageList)
 		{
