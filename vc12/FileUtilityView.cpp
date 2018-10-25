@@ -162,9 +162,9 @@ void CFileUtilityView::OnGenerateTrainList()
 		std::vector<tstring>		imageList;
 		m_FilesMap.clear();
 
-		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/"), subPath, _T("jpg"), imageList);
+		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/"), subPath, _T("jpeg"), imageList);
 		
-		if (classList.empty())
+		if (imageList.empty())
 		{
 			tstring pathTemp(imagePath + _T("/") + subPath);
 			outputInfo(pathTemp.c_str());
