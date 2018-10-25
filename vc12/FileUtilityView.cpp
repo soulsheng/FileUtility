@@ -139,6 +139,12 @@ void CFileUtilityView::OnGenerateTrainList()
 	StringVec	classList;
 	CFileUtilitySTL::readFilelist(imagePath+_T("classIndex.txt"), classList);
 
+	if (classList.empty())
+	{
+		outputInfo(_T("类索引文件无法找到或是空的"));
+		return;
+	}
+
 	CFileUtilitySTL::convertList2Map(classMap, classList);
 
 	tstring filelistTrain(imagePath + _T("/train.txt"));
@@ -157,6 +163,14 @@ void CFileUtilityView::OnGenerateTrainList()
 		m_FilesMap.clear();
 
 		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/"), subPath, _T("jpg"), imageList);
+		
+		if (classList.empty())
+		{
+			tstring pathTemp(imagePath + _T("/") + subPath);
+			outputInfo(pathTemp.c_str());
+			outputInfo(_T("目录有误或是空的"));
+			continue;
+		}
 
 		for each (tstring file in imageList)
 		{
@@ -178,6 +192,11 @@ void CFileUtilityView::OnGenerateTrainList()
 	}
 
 	CFileUtilitySTL::generateVal(filelistTrain, filelistVal);
+
+	outputInfo(_T(""));
+	outputInfo(filelistTrain.c_str());
+	outputInfo(filelistVal.c_str());
+	outputInfo(_T("成功生成"));
 }
 
 void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)

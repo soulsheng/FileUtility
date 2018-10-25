@@ -52,7 +52,6 @@ bool CFileUtilitySTL::readFilelist(tstring filename, StringVec& lines)
 	if (!file)
 	{//如果没成功
 
-		throw runtime_error("file cannot open");
 		return false;
 	}
 	else
