@@ -60,6 +60,7 @@ protected:
 public:
 	void	FillBuildWindow(tstring& msg);
 	void	AddFileViewBranch(tstring name, tstring root);
+	void	AddFileViewBranch(StringVec names, tstring root);
 
 };
 

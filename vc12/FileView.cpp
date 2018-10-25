@@ -294,3 +294,9 @@ void CFileView::AddBranch(tstring name, tstring root)
 	OnSetFocus(pFrame);
 }
 
+void CFileView::AddBranch(StringVec names, tstring root)
+{
+	for (StringVec::iterator itr = names.begin(); itr != names.end(); itr++)
+		AddBranch(*itr, root);
+}
+

@@ -155,6 +155,8 @@ void CFileUtilityView::OnGenerateTrainList()
 	else
 		outputInfo(_T("已删除"));
 
+	std::map<tstring, StringVec> supperFileList;
+
 	outputInfo(imagePath.c_str());
 	for each (tstring subPath in classList)
 	{
@@ -177,8 +179,9 @@ void CFileUtilityView::OnGenerateTrainList()
 			m_FilesMap.insert(FilesPair(file, imagePath + file));
 
 			outputInfo(file.c_str());
-			AddFileViewBranch(file, subPath);
 		}
+		//AddFileViewBranch(imageList, subPath);
+		supperFileList.insert(std::make_pair(subPath, imageList));
 
 		if (!image.IsNull())
 			image.Destroy();
@@ -197,6 +200,11 @@ void CFileUtilityView::OnGenerateTrainList()
 	outputInfo(filelistTrain.c_str());
 	outputInfo(filelistVal.c_str());
 	outputInfo(_T("成功生成"));
+
+	// update ui once 
+	for (std::map<tstring, StringVec>::iterator itr = supperFileList.begin(); itr != supperFileList.end();itr++)
+		AddFileViewBranch(itr->second, itr->first);
+
 }
 
 void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)
@@ -249,6 +257,13 @@ void CFileUtilityView::OnGetFileListNest()
 }
 
 void CFileUtilityView::AddFileViewBranch(tstring fileNameShort, tstring root)
+{
+	// MainFrame
+	CMainFrame *pMain = (CMainFrame *)AfxGetMainWnd();
+	pMain->AddFileViewBranch(fileNameShort, root);
+}
+
+void CFileUtilityView::AddFileViewBranch(StringVec fileNameShort, tstring root /*= _T("")*/)
 {
 	// MainFrame
 	CMainFrame *pMain = (CMainFrame *)AfxGetMainWnd();

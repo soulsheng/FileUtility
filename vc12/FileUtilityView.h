@@ -47,6 +47,7 @@ public:
 public:
 	void	outputInfo(const TCHAR* message, int value = -1);	// print to output window or status bar
 	void	AddFileViewBranch(tstring fileNameShort, tstring root=_T("") );
+	void	AddFileViewBranch(StringVec fileNameShort, tstring root = _T(""));
 	void	switchBilViewByName(tstring name);
 
 protected:

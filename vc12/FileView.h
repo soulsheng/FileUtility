@@ -46,6 +46,7 @@ public:
 
 	void	createRootItem();
 	void	AddBranch(tstring name, tstring root);
+	void	AddBranch(StringVec names, tstring root);
 
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

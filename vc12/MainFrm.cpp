@@ -261,6 +261,11 @@ void CMainFrame::AddFileViewBranch(tstring name, tstring root)
 	m_wndFileView.AddBranch(name, root);
 }
 
+void CMainFrame::AddFileViewBranch(StringVec names, tstring root)
+{
+	m_wndFileView.AddBranch(names, root);
+}
+
 // CMainFrame ’Ô∂œ
 
 #ifdef _DEBUG
