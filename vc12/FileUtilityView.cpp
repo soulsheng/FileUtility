@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_WM_TIMER()
 	ON_WM_CREATE()
 	ON_COMMAND(ID_GET_FILE_LIST_NEST, &CFileUtilityView::OnGetFileListNest)
+	ON_COMMAND(ID_SHINK_VAL_LIST, &CFileUtilityView::OnShinkValList)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -135,7 +136,7 @@ void CFileUtilityView::OnGenerateTrainList()
 
 	//CFileUtilityWIN::getSubPathFromPath(imagePath, subPathList);
 
-	ClassesMap	classMap;
+	StringIDMap	classMap;
 	StringVec	classList;
 	CFileUtilitySTL::readFilelist(imagePath+_T("classIndex.txt"), classList);
 
@@ -327,4 +328,66 @@ void CFileUtilityView::OnGetFileList()
 	}
 
 	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
+}
+
+
+void CFileUtilityView::OnShinkValList()
+{
+	// TODO:  在此添加命令处理程序代码
+	tstring		filePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(filePath);
+
+	if (filePath.empty())
+		return;
+
+	StringVec	classNoList;
+	CFileUtilitySTL::readFilelist(filePath + _T("classNo.txt"), classNoList);
+
+	StringIDMap	classMap;
+	CFileUtilitySTL::convertList2Map(classMap, classNoList);
+
+	if (classNoList.empty())
+	{
+		tstring pathTemp(filePath + _T("classNo.txt"));
+		outputInfo(pathTemp.c_str());
+		outputInfo(_T("文件有误或是空的"));
+		return;
+	}
+
+	StringVec	valFulList;
+	CFileUtilitySTL::readFilelist(filePath + _T("val-full.txt"), valFulList);
+
+	if (classNoList.empty())
+	{
+		tstring pathTemp(filePath + _T("val-full.txt"));
+		outputInfo(pathTemp.c_str());
+		outputInfo(_T("文件有误或是空的"));
+		return;
+	}
+
+	StringIDMap	valMap;
+	for each (tstring valLine in valFulList)
+	{
+		if (valLine.empty())
+			continue;
+
+		int classNoMatch = 0;
+		for (StringIDMap::iterator itr = classMap.begin(); itr != classMap.end();itr++)
+		{
+			int indexBlank = valLine.find_last_of(_T(" "));
+			tstring lastID = valLine.substr( indexBlank );
+			
+			if (tstring::npos == lastID.find(itr->first))
+				continue;
+			else
+			{
+				valMap.insert(StringIDPair(valLine.substr(0, indexBlank + 1), itr->second));
+				break;
+			}
+		}
+	}
+
+	CFileUtilitySTL::writeFilelist(filePath + _T("val.txt"), valMap);
+
 }

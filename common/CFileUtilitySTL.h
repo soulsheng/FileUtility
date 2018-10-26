@@ -18,7 +18,11 @@ public:
 
 	static bool		readFilelist(tstring filename, StringVec& lines);
 
-	static void		convertList2Map(ClassesMap& classes, StringVec& lines);
+	static bool		writeFilelist(tstring filename, StringVec& lines);
+
+	static bool		writeFilelist(tstring filename, StringIDMap& lines);
+
+	static void		convertList2Map(StringIDMap& classes, StringVec& lines);
 
 	// return 0, success 
 	static int		removeFile(tstring filename);

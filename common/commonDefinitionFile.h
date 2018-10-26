@@ -31,8 +31,8 @@ using namespace std;
 
 typedef std::vector<tstring>	StringVec;
 
-typedef std::pair<tstring, int>	ClassesPair;
-typedef std::map<tstring, int>	ClassesMap;
+typedef std::pair<tstring, int>	StringIDPair;
+typedef std::map<tstring, int>	StringIDMap;
 
 typedef std::pair<tstring, tstring>	FilesPair;
 typedef std::map<tstring, tstring>	FilesMap;

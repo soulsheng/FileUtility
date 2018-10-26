@@ -225,9 +225,10 @@ BEGIN
     END
     POPUP "工具"
     BEGIN
-        MENUITEM "生成训练列表",                    ID_GENERATE_TRAIN_LIST
+        MENUITEM "生成训练列表",                      ID_GENERATE_TRAIN_LIST
         MENUITEM "获取文件列表",                      ID_GET_FILE_LIST
         MENUITEM "获取文件列表嵌套",                    ID_GET_FILE_LIST_NEST
+        MENUITEM "收缩验证列表",                      32777
     END
 END
 

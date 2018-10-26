@@ -41,6 +41,52 @@ void CFileUtilitySTL::writeFilelist(tstring filename, FilesMap& filesMap, int in
 
 }
 
+bool CFileUtilitySTL::writeFilelist(tstring filename, StringVec& lines)
+{
+	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+	std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+	tfstream fileOut;
+
+	fileOut.open(filename, ios::out);
+	if (!fileOut)
+	{//如果没成功
+		return false;
+	}
+
+	for (StringVec::iterator itr = lines.begin(); itr != lines.end(); itr++)
+		fileOut << *itr << std::endl;
+
+	fileOut.close();
+
+	std::locale::global(oPreviousLocale);
+
+	return true;
+}
+
+bool CFileUtilitySTL::writeFilelist(tstring filename, StringIDMap& lines)
+{
+	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+	std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+	tfstream fileOut;
+
+	fileOut.open(filename, ios::out);
+	if (!fileOut)
+	{//如果没成功
+		return false;
+	}
+
+	for (StringIDMap::iterator itr = lines.begin(); itr != lines.end(); itr++)
+		fileOut << itr->first << _T(" ") << itr->second << std::endl;
+
+	fileOut.close();
+
+	std::locale::global(oPreviousLocale);
+
+	return true;
+}
+
 bool CFileUtilitySTL::readFilelist(tstring filename, StringVec& lines)
 {
 	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
@@ -73,11 +119,11 @@ bool CFileUtilitySTL::readFilelist(tstring filename, StringVec& lines)
 	return true;
 }
 
-void CFileUtilitySTL::convertList2Map(ClassesMap& classes, StringVec& lines)
+void CFileUtilitySTL::convertList2Map(StringIDMap& classes, StringVec& lines)
 {
 	int index = 0;
 	for (StringVec::iterator itr = lines.begin(); itr != lines.end();itr++)
-		classes.insert(ClassesPair(*itr, index++));
+		classes.insert(StringIDPair(*itr, index++));
 	
 }
 
