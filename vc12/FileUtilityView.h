@@ -50,15 +50,22 @@ public:
 	void	AddFileViewBranch(StringVec fileNameShort, tstring root = _T(""));
 	void	switchBilViewByName(tstring name);
 
+	void	kernelSelectSample(bool rename=false);
+
 protected:
 	CImage image;
 
 	FilesMap	m_FilesMap;
+
+	tstring		imagePath;
+
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnGetFileListNest();
 	afx_msg void OnShinkValList();
+	afx_msg void OnSelectSample();
+	afx_msg void OnSubPathMix();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

@@ -11,10 +11,12 @@ public:
 public:
 	static void getFileListFromPath(tstring &path, tstring fmt, std::vector<tstring> &list);
 	
-	static void getFileListFromPathNest(tstring path, tstring pathSub, tstring fmt, std::vector<tstring> &list);
+	static void getFileListFromPathNest(tstring path, tstring pathSub, StringVec &fmts, StringVec &list);
 
 	static void getFilePathFromDialog(tstring &path);
 
 	static void getSubPathFromPath(tstring &path, std::vector<tstring> &list);
+
+	static bool createPath(tstring &path);
 
 };

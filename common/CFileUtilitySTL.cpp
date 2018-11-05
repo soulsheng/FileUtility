@@ -119,6 +119,42 @@ bool CFileUtilitySTL::readFilelist(tstring filename, StringVec& lines)
 	return true;
 }
 
+bool CFileUtilitySTL::readFilelist(tstring filename, StringIDMap& lines)
+{
+	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+	std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+	tfstream file;
+
+	file.open(filename, ios::in);
+	if (!file)
+	{//如果没成功
+		return false;
+	}
+
+	tstring s;
+	//fstream类中也有getline成员函数，不要弄错
+	//getline(infile,s);
+	while (!file.eof())
+	{
+		//infile >> s;
+		getline(file, s);
+
+		int indexBlank = s.find_last_of(_T(" "));
+		if( -1 == indexBlank)
+			continue;
+		tstring lastID = s.substr(indexBlank);
+		int id = _ttoi(lastID.c_str());
+		lines.insert(StringIDPair(s.substr(0, indexBlank), id));
+	}
+
+	file.close();
+
+	std::locale::global(oPreviousLocale);
+
+	return true;
+}
+
 void CFileUtilitySTL::convertList2Map(StringIDMap& classes, StringVec& lines)
 {
 	int index = 0;
@@ -174,6 +210,47 @@ bool CFileUtilitySTL::generateVal(tstring filename, tstring filenameVal)
 
 	std::locale::global(oPreviousLocale);
 
+	return true;
+}
+
+bool CFileUtilitySTL::copyFilelist(tstring& fromPath, tstring& toPath, StringIDMap& lines)
+{
+	StringIDMap::iterator itr = lines.begin();
+
+	for (; itr!=lines.end(); itr++)
+		copyFile(fromPath + itr->first, toPath + itr->first);
+
+	return true;
+}
+
+bool CFileUtilitySTL::copyFile(tstring& fromPath, tstring& toPath)
+{
+	// ref: https://www.cnblogs.com/endenvor/p/6819043.html 
+	using namespace std;
+	ifstream in(fromPath, ios::binary);
+	ofstream out(toPath, ios::binary);
+	if (!in.is_open()) {
+		return false;
+	}
+	if (!out.is_open()) {
+		return false;
+	}
+	if (fromPath == toPath) {	
+		return false;
+	}
+	char buf[2048];
+	long long totalBytes = 0;
+	while (in)
+	{
+		//read从in流中读取2048字节，放入buf数组中，同时文件指针向后移动2048字节
+		//若不足2048字节遇到文件结尾，则以实际提取字节读取。
+		in.read(buf, 2048);
+		//gcount()用来提取读取的字节数，write将buf中的内容写入out流。
+		out.write(buf, in.gcount());
+		totalBytes += in.gcount();
+	}
+	in.close();
+	out.close();
 	return true;
 }
 

@@ -36,6 +36,8 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_WM_CREATE()
 	ON_COMMAND(ID_GET_FILE_LIST_NEST, &CFileUtilityView::OnGetFileListNest)
 	ON_COMMAND(ID_SHINK_VAL_LIST, &CFileUtilityView::OnShinkValList)
+	ON_COMMAND(ID_SELECT_SAMPLE, &CFileUtilityView::OnSelectSample)
+	ON_COMMAND(ID_SUB_PATH_MIX, &CFileUtilityView::OnSubPathMix)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -142,7 +144,7 @@ void CFileUtilityView::OnGenerateTrainList()
 
 	if (classList.empty())
 	{
-		outputInfo(_T("类索引文件无法找到或是空的"));
+		outputInfo(_T("类索引文件无法找到或是空的，classIndex.txt"));
 		return;
 	}
 
@@ -165,7 +167,10 @@ void CFileUtilityView::OnGenerateTrainList()
 		std::vector<tstring>		imageList;
 		m_FilesMap.clear();
 
-		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/"), subPath, _T("jpeg"), imageList);
+		StringVec fmts;
+		fmts.push_back(tstring(_T("jpg")));
+		fmts.push_back(tstring(_T("jpeg")));
+		CFileUtilityWIN::getFileListFromPathNest(imagePath + _T("/"), subPath, fmts, imageList);
 		
 		if (imageList.empty())
 		{
@@ -195,7 +200,7 @@ void CFileUtilityView::OnGenerateTrainList()
 		CFileUtilitySTL::writeFilelist(filelistTrain, m_FilesMap, classMap[subPath], false);
 	}
 
-	CFileUtilitySTL::generateVal(filelistTrain, filelistVal);
+	//CFileUtilitySTL::generateVal(filelistTrain, filelistVal);
 
 	outputInfo(_T(""));
 	outputInfo(filelistTrain.c_str());
@@ -212,7 +217,7 @@ void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)
 {
 	CMainFrame* pMFram = (CMainFrame*)AfxGetMainWnd();
 
-	tstream os;
+	tsstream os;
 	os << message;
 
 	if (-1 != value)
@@ -225,7 +230,6 @@ void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)
 void CFileUtilityView::OnGetFileListNest()
 {
 	// TODO:  在此添加命令处理程序代码
-	tstring		imagePath;
 
 	CFileUtilityWIN::getFilePathFromDialog(imagePath);
 
@@ -234,7 +238,10 @@ void CFileUtilityView::OnGetFileListNest()
 
 	std::vector<tstring>		imageList;
 
-	CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), _T("jpg"), imageList);
+	StringVec fmts;
+	fmts.push_back(tstring(_T("jpg")));
+	fmts.push_back(tstring(_T("jpeg")));
+	CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), fmts, imageList);
 
 	if (imageList.empty())
 		return;
@@ -390,4 +397,41 @@ void CFileUtilityView::OnShinkValList()
 
 	CFileUtilitySTL::writeFilelist(filePath + _T("val.txt"), valMap);
 
+}
+
+void CFileUtilityView::OnSelectSample()
+{
+	kernelSelectSample();
+}
+
+void CFileUtilityView::kernelSelectSample(bool rename)
+{
+	// TODO:  在此添加命令处理程序代码
+	tstring		filePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(filePath);
+
+	if (filePath.empty())
+		return;
+
+	StringIDMap	valMap;
+	CFileUtilitySTL::readFilelist(filePath + _T("val.txt"), valMap);
+
+	tstring toPath = filePath + _T("/select/");
+
+	CFileUtilityWIN::createPath(toPath);
+
+	CFileUtilitySTL::copyFilelist(filePath, toPath, valMap);
+
+	outputInfo(_T(""));
+	outputInfo(_T("样本挑选完成！目标目录："));
+	outputInfo(toPath.c_str());
+}
+
+
+void CFileUtilityView::OnSubPathMix()
+{
+	// TODO:  在此添加命令处理程序代码
+	//kernelSelectSample(true);
+	
 }

@@ -10,19 +10,20 @@
 
 #include <sstream>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
 #ifdef _UNICODE
 #define tstring std::wstring
-#define tstream std::wostringstream
+#define tsstream std::wostringstream
 #define tstrstr	std::wcsstr
 #define tstrcmp	std::wcscmp
 #define tfstream std::wfstream
 
 #else
 #define tstring std::string
-#define tstream std::ostringstream
+#define tsstream std::ostringstream
 #define tstrstr	std::strstr
 #define tstrcmp	std::strcmp
 #define tfstream std::fstream;

@@ -26,7 +26,7 @@ void CFileUtilityWIN::getFileListFromPath(tstring &path, tstring fmt, std::vecto
 
 }
 
-void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, tstring fmt, std::vector<tstring> &list)
+void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, StringVec &fmts, std::vector<tstring> &list)
 {
 	tstring csDirPath = path + pathSub + _T("\\*.*");// +fmt;
 	HANDLE file=0;
@@ -43,10 +43,17 @@ void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, tst
 		{
 			tstring filename(fileData.cFileName);
 			transform(filename.begin(), filename.end(), filename.begin(), toupper);
-			transform(fmt.begin(), fmt.end(), fmt.begin(), toupper);
 
-			if (NULL != tstrstr(filename.c_str(), fmt.c_str()))
-				list.push_back(pathSub + _T("/") + fileData.cFileName);
+			for each (tstring fmt in fmts)
+			{
+				transform(fmt.begin(), fmt.end(), fmt.begin(), toupper);
+
+				if (NULL != tstrstr(filename.c_str(), fmt.c_str()))
+				{
+					list.push_back(pathSub + _T("/") + fileData.cFileName);
+					break;
+				}
+			}
 		}
 		else
 		{
@@ -54,7 +61,7 @@ void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, tst
 				continue;
 
 			tstring pathSubNest = pathSub + _T("/") + fileData.cFileName;
-			getFileListFromPathNest(path, pathSubNest, fmt, list);
+			getFileListFromPathNest(path, pathSubNest, fmts, list);
 		}
 
 	} while (FindNextFile(file, &fileData));
@@ -122,4 +129,9 @@ void CFileUtilityWIN::getSubPathFromPath(tstring &path, std::vector<tstring> &li
 
 	} while (FindNextFile(file, &fileData));
 
+}
+
+bool CFileUtilityWIN::createPath(tstring &path)
+{
+	return CreateDirectory(path.c_str(), NULL);
 }

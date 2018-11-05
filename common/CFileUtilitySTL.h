@@ -17,9 +17,9 @@ public:
 	static void		writeFilelist(tstring filename, FilesMap& filesMap, int index = -1, bool rewrite = true);
 
 	static bool		readFilelist(tstring filename, StringVec& lines);
-
 	static bool		writeFilelist(tstring filename, StringVec& lines);
 
+	static bool		readFilelist(tstring filename, StringIDMap& lines);
 	static bool		writeFilelist(tstring filename, StringIDMap& lines);
 
 	static void		convertList2Map(StringIDMap& classes, StringVec& lines);
@@ -28,5 +28,9 @@ public:
 	static int		removeFile(tstring filename);
 
 	static bool		generateVal(tstring filename, tstring filenameVal);
+
+	static bool		copyFile(tstring& fromPath, tstring& toPath);
+
+	static bool		copyFilelist(tstring& fromPath, tstring& toPath, StringIDMap& lines);
 
 };
