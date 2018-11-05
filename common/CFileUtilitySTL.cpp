@@ -223,6 +223,34 @@ bool CFileUtilitySTL::copyFilelist(tstring& fromPath, tstring& toPath, StringIDM
 	return true;
 }
 
+bool CFileUtilitySTL::copyFilelistRename(tstring& fromPath, tstring& toPath, StringIDMap& lines)
+{
+	StringIDMap::iterator itr = lines.begin();
+
+	for (; itr != lines.end(); itr++)
+	{
+		tstring filenameNew = unfoldRelativePath(itr->first);
+
+		copyFile(fromPath + itr->first, toPath + filenameNew);
+
+	}
+
+	return true;
+}
+
+tstring CFileUtilitySTL::unfoldRelativePath(tstring path)
+{
+	StringVec resultVec = CFileUtilitySTL::split(path, _T("\\/"));
+
+	tstring pathNew;
+	for (StringVec::iterator itr = resultVec.begin(); itr != resultVec.end(); itr++)
+	{
+		pathNew += _T("-");
+		pathNew += *itr;
+	}
+	return pathNew;
+}
+
 bool CFileUtilitySTL::copyFile(tstring& fromPath, tstring& toPath)
 {
 	// ref: https://www.cnblogs.com/endenvor/p/6819043.html 
@@ -254,3 +282,20 @@ bool CFileUtilitySTL::copyFile(tstring& fromPath, tstring& toPath)
 	return true;
 }
 
+StringVec CFileUtilitySTL::split(const tstring &str, const tstring &pattern)
+{
+	//const char* convert to char*
+	TCHAR * strc = new TCHAR[wcslen(str.c_str()) + 1];
+	wcscpy(strc, str.c_str());
+	StringVec resultVec;
+	TCHAR* tmpStr = wcstok(strc, pattern.c_str());
+	while (tmpStr != NULL)
+	{
+		resultVec.push_back(tstring(tmpStr));
+		tmpStr = wcstok(NULL, pattern.c_str());
+	}
+
+	delete[] strc;
+
+	return resultVec;
+}

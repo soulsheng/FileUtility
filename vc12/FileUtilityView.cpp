@@ -423,7 +423,10 @@ void CFileUtilityView::kernelSelectSample(bool rename)
 
 	CFileUtilityWIN::createPath(toPath, valMap);
 
-	CFileUtilitySTL::copyFilelist(filePath, toPath, valMap);
+	if (rename)
+		CFileUtilitySTL::copyFilelistRename(filePath, toPath, valMap);
+	else
+		CFileUtilitySTL::copyFilelist(filePath, toPath, valMap);
 
 	outputInfo(_T(""));
 	outputInfo(_T("样本挑选完成！目标目录："));
@@ -434,6 +437,6 @@ void CFileUtilityView::kernelSelectSample(bool rename)
 void CFileUtilityView::OnSubPathMix()
 {
 	// TODO:  在此添加命令处理程序代码
-	//kernelSelectSample(true);
+	kernelSelectSample(true);
 	
 }
