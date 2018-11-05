@@ -421,6 +421,8 @@ void CFileUtilityView::kernelSelectSample(bool rename)
 
 	CFileUtilityWIN::createPath(toPath);
 
+	CFileUtilityWIN::createPath(toPath, valMap);
+
 	CFileUtilitySTL::copyFilelist(filePath, toPath, valMap);
 
 	outputInfo(_T(""));

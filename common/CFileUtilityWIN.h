@@ -19,4 +19,8 @@ public:
 
 	static bool createPath(tstring &path);
 
+	static bool createPath(tstring &path, StringIDMap &pathList);
+
+	static bool		getPathExist(tstring& path);
+
 };

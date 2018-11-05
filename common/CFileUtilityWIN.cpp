@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CFileUtilityWIN.h"
-
+#include "CFileUtilitySTL.h"
 
 void CFileUtilityWIN::getFileListFromPath(tstring &path, tstring fmt, std::vector<tstring> &list)
 {
@@ -134,4 +134,31 @@ void CFileUtilityWIN::getSubPathFromPath(tstring &path, std::vector<tstring> &li
 bool CFileUtilityWIN::createPath(tstring &path)
 {
 	return CreateDirectory(path.c_str(), NULL);
+}
+
+bool CFileUtilityWIN::createPath(tstring &path, StringIDMap &pathList)
+{
+	for (StringIDMap::iterator itr = pathList.begin(); itr != pathList.end(); itr++)
+	{
+		tstring pathOnly = CFileUtilitySTL::getPathFileName(path + itr->first);
+		if ( !getPathExist(pathOnly) )
+			createPath(pathOnly);
+	}
+
+	return true;
+}
+
+bool CFileUtilityWIN::getPathExist(tstring& path)
+{
+	tstring pathOnly = CFileUtilitySTL::getPathFileName(path);
+
+	WIN32_FIND_DATA  FindFileData;
+	BOOL bValue = false;
+	HANDLE hFind = FindFirstFile(pathOnly.c_str(), &FindFileData);
+	if ((hFind != INVALID_HANDLE_VALUE) && (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+	{
+		bValue = true;
+	}
+	FindClose(hFind);
+	return bValue;
 }
