@@ -26,7 +26,7 @@ using namespace std;
 #define tsstream std::ostringstream
 #define tstrstr	std::strstr
 #define tstrcmp	std::strcmp
-#define tfstream std::fstream;
+#define tfstream std::fstream
 
 #endif
 

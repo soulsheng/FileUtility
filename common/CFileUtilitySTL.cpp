@@ -285,14 +285,14 @@ bool CFileUtilitySTL::copyFile(tstring& fromPath, tstring& toPath)
 StringVec CFileUtilitySTL::split(const tstring &str, const tstring &pattern)
 {
 	//const char* convert to char*
-	TCHAR * strc = new TCHAR[wcslen(str.c_str()) + 1];
-	wcscpy(strc, str.c_str());
+	TCHAR * strc = new TCHAR[_tcslen(str.c_str()) + 1];
+	_tcscpy(strc, str.c_str());
 	StringVec resultVec;
-	TCHAR* tmpStr = wcstok(strc, pattern.c_str());
+	TCHAR* tmpStr = _tcstok(strc, pattern.c_str());
 	while (tmpStr != NULL)
 	{
 		resultVec.push_back(tstring(tmpStr));
-		tmpStr = wcstok(NULL, pattern.c_str());
+		tmpStr = _tcstok(NULL, pattern.c_str());
 	}
 
 	delete[] strc;
