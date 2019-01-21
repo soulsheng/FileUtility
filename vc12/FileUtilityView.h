@@ -66,6 +66,7 @@ public:
 	afx_msg void OnShinkValList();
 	afx_msg void OnSelectSample();
 	afx_msg void OnSubPathMix();
+	afx_msg void OnFileRenameBat();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

@@ -231,6 +231,7 @@ BEGIN
         MENUITEM "收缩验证列表",                      32777
         MENUITEM "挑选样本",                        ID_SELECT_SAMPLE
         MENUITEM "子目录合并",                       32780
+        MENUITEM "文件批量重命名",                     32781
     END
 END
 

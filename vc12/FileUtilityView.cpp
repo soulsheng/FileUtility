@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_SHINK_VAL_LIST, &CFileUtilityView::OnShinkValList)
 	ON_COMMAND(ID_SELECT_SAMPLE, &CFileUtilityView::OnSelectSample)
 	ON_COMMAND(ID_SUB_PATH_MIX, &CFileUtilityView::OnSubPathMix)
+	ON_COMMAND(MENU_FILE_RENAME_BAT, &CFileUtilityView::OnFileRenameBat)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -439,4 +440,31 @@ void CFileUtilityView::OnSubPathMix()
 	// TODO:  在此添加命令处理程序代码
 	kernelSelectSample(true);
 	
+}
+
+
+void CFileUtilityView::OnFileRenameBat()
+{
+	// TODO:  在此添加命令处理程序代码
+	tstring		imagePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(imagePath);
+
+	if (imagePath.empty())
+		return;
+
+	std::vector<tstring>		imageList;
+
+	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpeg"), imageList);
+
+
+	tstring toPath = imagePath + _T("/select/");
+
+	CFileUtilityWIN::createPath(toPath);
+
+	CFileUtilitySTL::copyFilelistRename(imagePath, toPath, imageList);
+
+	outputInfo(_T(""));
+	outputInfo(_T("样本挑选完成！目标目录："));
+	outputInfo(toPath.c_str());
 }
