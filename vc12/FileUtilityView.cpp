@@ -151,7 +151,7 @@ void CFileUtilityView::OnGenerateTrainList()
 
 	CFileUtilitySTL::convertList2Map(classMap, classList);
 
-	tstring filelistTrain(imagePath + _T("/train.txt"));
+	tstring filelistTrain(imagePath + _T("/filelist.txt"));
 	tstring filelistVal(imagePath + _T("/val.txt"));
 	outputInfo(filelistTrain.c_str());
 	if (CFileUtilitySTL::removeFile(filelistTrain))
@@ -324,7 +324,7 @@ void CFileUtilityView::OnGetFileList()
 
 	std::vector<tstring>		imageList;
 
-	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpg"), imageList);
+	CFileUtilityWIN::getFileListFromPath(imagePath, _T("*"), imageList);
 
 	outputInfo(imagePath.c_str());
 	for each (tstring file in imageList)
