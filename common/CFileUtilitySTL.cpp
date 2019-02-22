@@ -3,8 +3,15 @@
 
 tstring CFileUtilitySTL::getShortFileName(tstring& fullpath)
 {
-	int indexEnd = fullpath.find_last_of('\\');
+	int indexEnd = fullpath.find_last_of(_T("\\/"));
 	return fullpath.substr(indexEnd + 1);
+}
+
+tstring CFileUtilitySTL::getOnlyFileName(tstring& fullpath)
+{
+	tstring shortname = getShortFileName(fullpath);
+	int indexEnd = shortname.find_last_of('.');
+	return shortname.substr(0, indexEnd);
 }
 
 tstring CFileUtilitySTL::getPathFileName(tstring& fullpath)
@@ -145,7 +152,7 @@ bool CFileUtilitySTL::readFilelist(tstring filename, StringIDMap& lines)
 			continue;
 		tstring lastID = s.substr(indexBlank);
 		int id = _ttoi(lastID.c_str());
-		lines.insert(StringIDPair(s.substr(0, indexBlank), id));
+		lines.insert(StringIDPair(s.substr(0, s.find_first_of(_T(" "))), id));
 	}
 
 	file.close();
@@ -315,4 +322,32 @@ StringVec CFileUtilitySTL::split(const tstring &str, const tstring &pattern)
 	delete[] strc;
 
 	return resultVec;
+}
+
+bool CFileUtilitySTL::selectLableNoEqualMinusOne(StringIDMap& lines, StringVec& filelist)
+{
+	StringIDMap::iterator itr = lines.begin();
+
+	for (; itr != lines.end(); itr++)
+	{
+		if (itr->second != -1)
+			filelist.push_back(itr->first);
+	}
+
+	return true;
+}
+
+bool CFileUtilitySTL::convert2JpgXMLLine(StringVec& lines, StringVec& linesJpgXML)
+{
+	//in:	000695
+	//out:	VOC2007/JPEGImages/000695.jpg VOC2007/Annotations/000695.xml
+	for (StringVec::iterator itr = lines.begin(); itr != lines.end(); itr++)
+	{
+		tstring lineNew = _T("VOC2007/JPEGImages/") + *itr + _T(".jpg");
+		lineNew += _T(" ");
+		lineNew += _T("VOC2007/Annotations/") + *itr + _T(".xml");
+		linesJpgXML.push_back(lineNew);
+	}
+
+	return true;
 }

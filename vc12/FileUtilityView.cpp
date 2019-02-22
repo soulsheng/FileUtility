@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_SELECT_SAMPLE, &CFileUtilityView::OnSelectSample)
 	ON_COMMAND(ID_SUB_PATH_MIX, &CFileUtilityView::OnSubPathMix)
 	ON_COMMAND(MENU_FILE_RENAME_BAT, &CFileUtilityView::OnFileRenameBat)
+	ON_COMMAND(ID_SELECT_SAMPLE_VOC, &CFileUtilityView::OnSelectSampleVoc)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -467,4 +468,33 @@ void CFileUtilityView::OnFileRenameBat()
 	outputInfo(_T(""));
 	outputInfo(_T("样本挑选完成！目标目录："));
 	outputInfo(toPath.c_str());
+}
+
+
+void CFileUtilityView::OnSelectSampleVoc()
+{
+	// TODO:  在此添加命令处理程序代码
+	tstring filelistMix = CFileUtilityMFC::openFileDialog(_T("txt"), _T("trainval/test.txt | *.txt"), this);
+
+	if (filelistMix.empty())
+		return;
+
+	StringIDMap	valMap;
+	CFileUtilitySTL::readFilelist(filelistMix, valMap);
+
+	tstring filePath = CFileUtilitySTL::getPathFileName(filelistMix);
+	tstring fileOnly = CFileUtilitySTL::getOnlyFileName(filelistMix);
+	tstring filelistSelect = filePath + fileOnly + _T("_select.txt");
+
+	StringVec fileVec;
+	CFileUtilitySTL::selectLableNoEqualMinusOne(valMap, fileVec);
+
+	StringVec lineJpgXMLVec;
+	CFileUtilitySTL::convert2JpgXMLLine(fileVec, lineJpgXMLVec);
+
+	CFileUtilitySTL::writeFilelist(filelistSelect, lineJpgXMLVec);
+
+	outputInfo(_T(""));
+	outputInfo(_T("样本挑选完成！目标目录："));
+	outputInfo(filelistSelect.c_str());
 }

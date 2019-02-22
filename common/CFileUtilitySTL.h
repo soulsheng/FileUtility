@@ -11,6 +11,7 @@ public:
 
 public:
 	static tstring getShortFileName(tstring& fullpath);
+	static tstring getOnlyFileName(tstring& fullpath);
 
 	static tstring getPathFileName(tstring& fullpath);
 
@@ -40,4 +41,6 @@ public:
 
 	static StringVec split(const tstring &str, const tstring &pattern);
 
+	static bool		selectLableNoEqualMinusOne(StringIDMap& lines, StringVec& filelist);
+	static bool		convert2JpgXMLLine(StringVec& lines, StringVec& linesJpgXML);
 };
