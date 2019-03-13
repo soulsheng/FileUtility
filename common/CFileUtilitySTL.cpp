@@ -20,6 +20,12 @@ tstring CFileUtilitySTL::getPathFileName(tstring& fullpath)
 	return fullpath.substr(0, indexEnd + 1);
 }
 
+tstring CFileUtilitySTL::getPathSub(tstring& fullpath, tstring& lastdir)
+{
+	int indexEnd = fullpath.find(lastdir);
+	return fullpath.substr(0, indexEnd );
+}
+
 void CFileUtilitySTL::writeFilelist(tstring filename, FilesMap& filesMap, int index/* = -1*/, bool rewrite/* = true*/)
 {
 	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
@@ -63,6 +69,32 @@ bool CFileUtilitySTL::writeFilelist(tstring filename, StringVec& lines)
 
 	for (StringVec::iterator itr = lines.begin(); itr != lines.end(); itr++)
 		fileOut << *itr << std::endl;
+
+	fileOut.close();
+
+	std::locale::global(oPreviousLocale);
+
+	return true;
+}
+
+bool CFileUtilitySTL::writeFilelist(tstring filename, StringVec& lines1, StringVec& lines2)
+{
+	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
+	std::locale oPreviousLocale = std::locale::global(oNewLocale);
+
+	tfstream fileOut;
+
+	fileOut.open(filename, ios::out);
+	if (!fileOut)
+	{//如果没成功
+		return false;
+	}
+
+	StringVec::iterator itr1 = lines1.begin();
+	StringVec::iterator itr2 = lines2.begin();
+
+	for (; itr1 != lines1.end(); itr1++, itr2++)
+		fileOut << *itr1 << _T(" ") << *itr2 << std::endl;
 
 	fileOut.close();
 
@@ -230,6 +262,27 @@ bool CFileUtilitySTL::copyFilelist(tstring& fromPath, tstring& toPath, StringIDM
 	return true;
 }
 
+bool CFileUtilitySTL::copyFilelist(tstring& fromPath, tstring& toPath, StringVec& fromLines, StringVec& toLines)
+{
+	StringVec::iterator itrFrom = fromLines.begin();
+	StringVec::iterator itrTo = toLines.begin();
+
+	for (; itrFrom != fromLines.end(); itrFrom++, itrTo++)
+		copyFile(fromPath + *itrFrom, toPath + *itrTo);
+
+	return true;
+}
+
+bool CFileUtilitySTL::copyFilelist(tstring& fromPath, tstring& toPath, StringVec& lines)
+{
+	StringVec::iterator itr = lines.begin();
+
+	for (; itr != lines.end(); itr++)
+		copyFile(fromPath + *itr, toPath + *itr);
+
+	return true;
+}
+
 bool CFileUtilitySTL::copyFilelistRename(tstring& fromPath, tstring& toPath, StringVec& lines)
 {
 	StringVec::iterator itr = lines.begin();
@@ -337,16 +390,14 @@ bool CFileUtilitySTL::selectLableNoEqualMinusOne(StringIDMap& lines, StringVec& 
 	return true;
 }
 
-bool CFileUtilitySTL::convert2JpgXMLLine(StringVec& lines, StringVec& linesJpgXML)
+bool CFileUtilitySTL::convertString(StringVec& lines, StringVec& linesOut, tstring& prefix, tstring& suffix)
 {
 	//in:	000695
 	//out:	VOC2007/JPEGImages/000695.jpg VOC2007/Annotations/000695.xml
 	for (StringVec::iterator itr = lines.begin(); itr != lines.end(); itr++)
 	{
-		tstring lineNew = _T("VOC2007/JPEGImages/") + *itr + _T(".jpg");
-		lineNew += _T(" ");
-		lineNew += _T("VOC2007/Annotations/") + *itr + _T(".xml");
-		linesJpgXML.push_back(lineNew);
+		tstring lineNew = prefix + *itr + suffix;
+		linesOut.push_back(lineNew);
 	}
 
 	return true;

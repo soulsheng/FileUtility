@@ -15,10 +15,13 @@ public:
 
 	static tstring getPathFileName(tstring& fullpath);
 
+	static tstring getPathSub(tstring& fullpath, tstring& lastdir);
+
 	static void		writeFilelist(tstring filename, FilesMap& filesMap, int index = -1, bool rewrite = true);
 
 	static bool		readFilelist(tstring filename, StringVec& lines);
 	static bool		writeFilelist(tstring filename, StringVec& lines);
+	static bool		writeFilelist(tstring filename, StringVec& lines1, StringVec& lines2);
 
 	static bool		readFilelist(tstring filename, StringIDMap& lines);
 	static bool		writeFilelist(tstring filename, StringIDMap& lines);
@@ -33,6 +36,8 @@ public:
 	static bool		copyFile(tstring& fromPath, tstring& toPath);
 
 	static bool		copyFilelist(tstring& fromPath, tstring& toPath, StringIDMap& lines);
+	static bool		copyFilelist(tstring& fromPath, tstring& toPath, StringVec& lines);
+	static bool		copyFilelist(tstring& fromPath, tstring& toPath, StringVec& fromLines, StringVec& toLines);
 
 	static bool		copyFilelistRename(tstring& fromPath, tstring& toPath, StringIDMap& lines);
 	static bool		copyFilelistRename(tstring& fromPath, tstring& toPath, StringVec& lines);
@@ -42,5 +47,5 @@ public:
 	static StringVec split(const tstring &str, const tstring &pattern);
 
 	static bool		selectLableNoEqualMinusOne(StringIDMap& lines, StringVec& filelist);
-	static bool		convert2JpgXMLLine(StringVec& lines, StringVec& linesJpgXML);
+	static bool		convertString(StringVec& lines, StringVec& linesOut, tstring& prefix, tstring& suffix);
 };

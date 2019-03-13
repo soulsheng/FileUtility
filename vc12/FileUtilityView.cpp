@@ -482,17 +482,32 @@ void CFileUtilityView::OnSelectSampleVoc()
 	StringIDMap	valMap;
 	CFileUtilitySTL::readFilelist(filelistMix, valMap);
 
-	tstring filePath = CFileUtilitySTL::getPathFileName(filelistMix);
+	tstring lastpath(_T("VOCdevkit"));
+	tstring filePath = CFileUtilitySTL::getPathSub(filelistMix, lastpath);
+	filePath += lastpath + _T("\\");
+
 	tstring fileOnly = CFileUtilitySTL::getOnlyFileName(filelistMix);
 	tstring filelistSelect = filePath + fileOnly + _T("_select.txt");
 
 	StringVec fileVec;
 	CFileUtilitySTL::selectLableNoEqualMinusOne(valMap, fileVec);
 
-	StringVec lineJpgXMLVec;
-	CFileUtilitySTL::convert2JpgXMLLine(fileVec, lineJpgXMLVec);
+	StringVec linesJpg, linesXml, linesJpgName, linesXmlName;
 
-	CFileUtilitySTL::writeFilelist(filelistSelect, lineJpgXMLVec);
+	CFileUtilitySTL::convertString(fileVec, linesJpg, tstring(_T("VOC2007/JPEGImages/")), tstring(_T(".jpg")));
+	CFileUtilitySTL::convertString(fileVec, linesXml, tstring(_T("VOC2007/Annotations/")), tstring(_T(".xml")));
+	CFileUtilitySTL::convertString(fileVec, linesJpgName, tstring(_T("")), tstring(_T(".jpg")));
+	CFileUtilitySTL::convertString(fileVec, linesXmlName, tstring(_T("")), tstring(_T(".xml")));
+
+	CFileUtilitySTL::writeFilelist(filelistSelect, linesJpg, linesXml);
+
+
+	tstring toPath = filePath + _T("/select/");
+
+	CFileUtilityWIN::createPath(toPath);
+
+	CFileUtilitySTL::copyFilelist(filePath, toPath, linesJpg, linesJpgName);
+	CFileUtilitySTL::copyFilelist(filePath, toPath, linesXml, linesXmlName);
 
 	outputInfo(_T(""));
 	outputInfo(_T("样本挑选完成！目标目录："));
