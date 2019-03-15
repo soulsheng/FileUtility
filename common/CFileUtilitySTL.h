@@ -21,7 +21,7 @@ public:
 
 	static bool		readFilelist(tstring filename, StringVec& lines);
 	static bool		writeFilelist(tstring filename, StringVec& lines);
-	static bool		writeFilelist(tstring filename, StringVec& lines1, StringVec& lines2);
+	static bool		mixStringVec(StringVec& lineMix, StringVec& lines1, StringVec& lines2);
 
 	static bool		readFilelist(tstring filename, StringIDMap& lines);
 	static bool		writeFilelist(tstring filename, StringIDMap& lines);

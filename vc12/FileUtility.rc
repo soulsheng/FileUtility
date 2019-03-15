@@ -232,11 +232,10 @@ BEGIN
         MENUITEM "挑选样本ImageNet",                ID_SELECT_SAMPLE
         MENUITEM "子目录合并",                       32780
         MENUITEM "文件批量重命名",                     32781
-        MENUITEM "挑选样本VOC",                     ID_SELECT_SAMPLE_VOC
     END
     POPUP "VOC"
     BEGIN
-        MENUITEM "xml挑选某类目标",                  ID_VOC_XML_SELECT
+        MENUITEM "挑选某类目标",                      ID_VOC_XML_SELECT
     END
 END
 
@@ -343,6 +342,29 @@ BEGIN
     DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
 END
 
+IDD_DIALOG_VOC DIALOGEX 0, 0, 301, 138
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "VOC format"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "VOC ROOT:",IDC_STATIC,17,18,39,8
+    EDITTEXT        IDC_EDIT_VOC_ROOT,59,15,193,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BTN_VOC_ROOT_PATH,258,15,29,14
+    GROUPBOX        "Select Class",IDC_STATIC,15,38,267,91
+    LTEXT           "Class Name:",IDC_STATIC,21,55,42,8
+    EDITTEXT        IDC_EDIT_CLASS_NAME,71,52,40,14,ES_AUTOHSCROLL
+    LISTBOX         IDC_LIST_FILE,125,49,151,62,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "GetFileIDList",IDC_BTN_GET_FILE_ID,16,92,50,14
+    LTEXT           "Number:",IDC_STATIC,199,115,28,8
+    EDITTEXT        IDC_EDIT3,236,112,40,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "2TrainList",IDC_BTN_FORMAT_TRAIN_LIST,16,111,50,14
+    PUSHBUTTON      "SaveList",IDC_BTN_SAVE_LIST,125,112,50,14
+    LTEXT           "File Name:",IDC_STATIC,22,73,34,8
+    EDITTEXT        IDC_EDIT4,72,70,40,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "FilterOnly",IDC_BTN_FILTER_ONLY,70,92,50,14
+    PUSHBUTTON      "CopyFiles",IDC_BTN_COPY_FILES,70,111,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -397,6 +419,14 @@ BEGIN
         RIGHTMARGIN, 163
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
+    END
+
+    IDD_DIALOG_VOC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 294
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 131
     END
 END
 #endif    // APSTUDIO_INVOKED

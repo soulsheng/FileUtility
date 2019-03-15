@@ -77,28 +77,18 @@ bool CFileUtilitySTL::writeFilelist(tstring filename, StringVec& lines)
 	return true;
 }
 
-bool CFileUtilitySTL::writeFilelist(tstring filename, StringVec& lines1, StringVec& lines2)
+bool CFileUtilitySTL::mixStringVec(StringVec& lineMix, StringVec& lines1, StringVec& lines2)
 {
-	std::locale oNewLocale(std::locale(), "", std::locale::ctype);
-	std::locale oPreviousLocale = std::locale::global(oNewLocale);
-
-	tfstream fileOut;
-
-	fileOut.open(filename, ios::out);
-	if (!fileOut)
-	{//如果没成功
-		return false;
-	}
+	lineMix.clear();
 
 	StringVec::iterator itr1 = lines1.begin();
 	StringVec::iterator itr2 = lines2.begin();
 
 	for (; itr1 != lines1.end(); itr1++, itr2++)
-		fileOut << *itr1 << _T(" ") << *itr2 << std::endl;
-
-	fileOut.close();
-
-	std::locale::global(oPreviousLocale);
+	{
+		tstring str = *itr1 + _T(" ") + *itr2;
+		lineMix.push_back(str);
+	}
 
 	return true;
 }

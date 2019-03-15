@@ -67,7 +67,6 @@ public:
 	afx_msg void OnSelectSample();
 	afx_msg void OnSubPathMix();
 	afx_msg void OnFileRenameBat();
-	afx_msg void OnSelectSampleVoc();
 	afx_msg void OnVocXmlSelect();
 };
 

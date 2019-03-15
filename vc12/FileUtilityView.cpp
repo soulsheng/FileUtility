@@ -19,6 +19,8 @@
 #include "CFileUtilitySTL.h"
 #include "CFileUtilityXML.h"
 
+#include "DialogVocFormat.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -40,7 +42,6 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_SELECT_SAMPLE, &CFileUtilityView::OnSelectSample)
 	ON_COMMAND(ID_SUB_PATH_MIX, &CFileUtilityView::OnSubPathMix)
 	ON_COMMAND(MENU_FILE_RENAME_BAT, &CFileUtilityView::OnFileRenameBat)
-	ON_COMMAND(ID_SELECT_SAMPLE_VOC, &CFileUtilityView::OnSelectSampleVoc)
 	ON_COMMAND(ID_VOC_XML_SELECT, &CFileUtilityView::OnVocXmlSelect)
 END_MESSAGE_MAP()
 
@@ -472,97 +473,8 @@ void CFileUtilityView::OnFileRenameBat()
 	outputInfo(toPath.c_str());
 }
 
-
-void CFileUtilityView::OnSelectSampleVoc()
-{
-	// TODO:  在此添加命令处理程序代码
-	tstring filelistMix = CFileUtilityMFC::openFileDialog(_T("txt"), _T("trainval/test.txt | *.txt"), this);
-
-	if (filelistMix.empty())
-		return;
-
-	StringIDMap	valMap;
-	CFileUtilitySTL::readFilelist(filelistMix, valMap);
-
-	tstring lastpath(_T("VOCdevkit"));
-	tstring filePath = CFileUtilitySTL::getPathSub(filelistMix, lastpath);
-	filePath += lastpath + _T("\\");
-
-	tstring fileOnly = CFileUtilitySTL::getOnlyFileName(filelistMix);
-	tstring filelistSelect = filePath + fileOnly + _T("_select.txt");
-
-	StringVec fileVec;
-	CFileUtilitySTL::selectLableNoEqualMinusOne(valMap, fileVec);
-
-	StringVec linesJpg, linesXml, linesJpgName, linesXmlName;
-
-	CFileUtilitySTL::convertString(fileVec, linesJpg, tstring(_T("VOC2007/JPEGImages/")), tstring(_T(".jpg")));
-	CFileUtilitySTL::convertString(fileVec, linesXml, tstring(_T("VOC2007/Annotations/")), tstring(_T(".xml")));
-	CFileUtilitySTL::convertString(fileVec, linesJpgName, tstring(_T("")), tstring(_T(".jpg")));
-	CFileUtilitySTL::convertString(fileVec, linesXmlName, tstring(_T("")), tstring(_T(".xml")));
-
-	CFileUtilitySTL::writeFilelist(filelistSelect, linesJpg, linesXml);
-
-
-	tstring toPath = filePath + _T("/select/");
-
-	CFileUtilityWIN::createPath(toPath);
-
-	CFileUtilitySTL::copyFilelist(filePath, toPath, linesJpg, linesJpgName);
-	CFileUtilitySTL::copyFilelist(filePath, toPath, linesXml, linesXmlName);
-
-	outputInfo(_T(""));
-	outputInfo(_T("样本挑选完成！目标目录："));
-	outputInfo(filelistSelect.c_str());
-}
-
-
 void CFileUtilityView::OnVocXmlSelect()
 {
-	// TODO:  在此添加命令处理程序代码
-	tstring		filePath;
-
-	CFileUtilityWIN::getFilePathFromDialog(filePath);
-
-	StringVec		fileList;
-
-	StringVec fmts;
-	fmts.push_back(tstring(_T("xml")));
-	CFileUtilityWIN::getFileListFromPathNest(filePath, _T(""), fmts, fileList);
-
-	if (fileList.empty())
-		return;
-
-	tstring toPath = filePath + _T("/select/");
-
-	CFileUtilityWIN::createPath(toPath);
-
-	StringVec		fileListFilter;
-
-	for each (tstring file in fileList)
-	{
-		StringVec obs;
-		CFileUtilityXML::findObjectNames(filePath+file, obs);
-
-		bool bNotBoat = false;
-		for each (tstring name in obs)
-		{
-			if (name != _T("boat"))
-			{
-				bNotBoat = true;
-				break;
-			}
-		}
-
-		if (!bNotBoat)
-			fileListFilter.push_back(file);
-	}
-
-	CFileUtilitySTL::writeFilelist(toPath+_T("xmlSelect.txt"), fileListFilter);
-
-	CFileUtilitySTL::copyFilelist(filePath, toPath, fileListFilter);
-
-	outputInfo(_T(""));
-	outputInfo(_T("样本挑选完成！目标目录："));
-	outputInfo(toPath.c_str());
+	CDialogVocFormat dlgVoc;
+	dlgVoc.DoModal();
 }

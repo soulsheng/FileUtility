@@ -84,6 +84,19 @@
 #define IDS_FIND_TAB                    302
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
+#define IDD_DIALOG_VOC                  310
+#define IDC_EDIT_VOC_ROOT               1000
+#define IDC_BTN_VOC_ROOT_PATH           1001
+#define IDC_EDIT_CLASS_NAME             1002
+#define IDC_LIST_FILE                   1004
+#define IDC_BTN_GET_FILE_ID             1005
+#define IDC_EDIT3                       1006
+#define IDC_BTN_FORMAT_TRAIN_LIST       1007
+#define IDC_BTN_SAVE_LIST               1008
+#define IDC_EDIT4                       1009
+#define IDC_BTN_FILTER_ONLY             1010
+#define IDC_BUTTON6                     1011
+#define IDC_BTN_COPY_FILES              1011
 #define ID_32771                        32771
 #define ID_GENERATE_TRAIN_LIST          32772
 #define ID_32773                        32773
@@ -104,9 +117,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        310
+#define _APS_NEXT_RESOURCE_VALUE        311
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

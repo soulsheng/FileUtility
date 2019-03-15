@@ -109,6 +109,7 @@
     <ClInclude Include="..\common\pugiconfig.hpp" />
     <ClInclude Include="..\common\pugixml.hpp" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="DialogVocFormat.h" />
     <ClInclude Include="FileUtility.h" />
     <ClInclude Include="FileUtilityDoc.h" />
     <ClInclude Include="FileUtilityView.h" />
@@ -128,6 +129,7 @@
     <ClCompile Include="..\common\CFileUtilityXML.cpp" />
     <ClCompile Include="..\common\pugixml.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="DialogVocFormat.cpp" />
     <ClCompile Include="FileUtility.cpp" />
     <ClCompile Include="FileUtilityDoc.cpp" />
     <ClCompile Include="FileUtilityView.cpp" />

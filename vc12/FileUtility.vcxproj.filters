@@ -78,6 +78,9 @@
     <ClInclude Include="..\common\CFileUtilityXML.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="DialogVocFormat.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileUtility.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="..\common\CFileUtilityXML.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogVocFormat.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
