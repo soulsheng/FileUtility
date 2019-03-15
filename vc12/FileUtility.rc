@@ -234,6 +234,10 @@ BEGIN
         MENUITEM "文件批量重命名",                     32781
         MENUITEM "挑选样本VOC",                     ID_SELECT_SAMPLE_VOC
     END
+    POPUP "VOC"
+    BEGIN
+        MENUITEM "xml挑选某类目标",                  ID_VOC_XML_SELECT
+    END
 END
 
 IDR_POPUP_EDIT MENU

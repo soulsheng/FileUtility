@@ -17,6 +17,7 @@
 #include "CFileUtilityMFC.h"
 #include "CFileUtilityWIN.h"
 #include "CFileUtilitySTL.h"
+#include "CFileUtilityXML.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -40,6 +41,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_SUB_PATH_MIX, &CFileUtilityView::OnSubPathMix)
 	ON_COMMAND(MENU_FILE_RENAME_BAT, &CFileUtilityView::OnFileRenameBat)
 	ON_COMMAND(ID_SELECT_SAMPLE_VOC, &CFileUtilityView::OnSelectSampleVoc)
+	ON_COMMAND(ID_VOC_XML_SELECT, &CFileUtilityView::OnVocXmlSelect)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -512,4 +514,55 @@ void CFileUtilityView::OnSelectSampleVoc()
 	outputInfo(_T(""));
 	outputInfo(_T("样本挑选完成！目标目录："));
 	outputInfo(filelistSelect.c_str());
+}
+
+
+void CFileUtilityView::OnVocXmlSelect()
+{
+	// TODO:  在此添加命令处理程序代码
+	tstring		filePath;
+
+	CFileUtilityWIN::getFilePathFromDialog(filePath);
+
+	StringVec		fileList;
+
+	StringVec fmts;
+	fmts.push_back(tstring(_T("xml")));
+	CFileUtilityWIN::getFileListFromPathNest(filePath, _T(""), fmts, fileList);
+
+	if (fileList.empty())
+		return;
+
+	tstring toPath = filePath + _T("/select/");
+
+	CFileUtilityWIN::createPath(toPath);
+
+	StringVec		fileListFilter;
+
+	for each (tstring file in fileList)
+	{
+		StringVec obs;
+		CFileUtilityXML::findObjectNames(filePath+file, obs);
+
+		bool bNotBoat = false;
+		for each (tstring name in obs)
+		{
+			if (name != _T("boat"))
+			{
+				bNotBoat = true;
+				break;
+			}
+		}
+
+		if (!bNotBoat)
+			fileListFilter.push_back(file);
+	}
+
+	CFileUtilitySTL::writeFilelist(toPath+_T("xmlSelect.txt"), fileListFilter);
+
+	CFileUtilitySTL::copyFilelist(filePath, toPath, fileListFilter);
+
+	outputInfo(_T(""));
+	outputInfo(_T("样本挑选完成！目标目录："));
+	outputInfo(toPath.c_str());
 }

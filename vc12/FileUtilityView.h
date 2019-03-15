@@ -68,6 +68,7 @@ public:
 	afx_msg void OnSubPathMix();
 	afx_msg void OnFileRenameBat();
 	afx_msg void OnSelectSampleVoc();
+	afx_msg void OnVocXmlSelect();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本
