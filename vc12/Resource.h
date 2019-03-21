@@ -97,6 +97,10 @@
 #define IDC_BTN_FILTER_ONLY             1010
 #define IDC_BUTTON6                     1011
 #define IDC_BTN_COPY_FILES              1011
+#define IDC_COMBO_VOC_VER               1012
+#define IDC_EDIT_JPG_DIR                1013
+#define IDC_EDIT_XML_DIR2               1014
+#define IDC_EDIT_XML_DIR                1014
 #define ID_32771                        32771
 #define ID_GENERATE_TRAIN_LIST          32772
 #define ID_32773                        32773
@@ -117,9 +121,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_RESOURCE_VALUE        312
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

@@ -38,4 +38,10 @@ public:
 	afx_msg void OnBnClickedBtnSaveList();
 	afx_msg void OnBnClickedBtnFilterOnly();
 	afx_msg void OnBnClickedBtnCopyFiles();
+protected:
+	CString m_sVocVersion;
+	CString m_sJpgDir;
+	CString m_sXmlDir;
+	tstring pathRelativeJpg, pathRelativeXml;
+
 };
