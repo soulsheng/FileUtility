@@ -10,5 +10,5 @@ public:
 
 public:
 	static bool findObjectNames(tstring& file, StringVec& strVec);
-
+	static bool editObjectNames(tstring fileIn, tstring fileOut, tstring str);
 };

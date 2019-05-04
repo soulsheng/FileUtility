@@ -81,6 +81,9 @@
     <ClInclude Include="DialogVocFormat.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DlgVocEdit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileUtility.cpp">
@@ -129,6 +132,9 @@
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="DialogVocFormat.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgVocEdit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

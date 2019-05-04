@@ -43,9 +43,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,6 +113,7 @@
     <ClInclude Include="..\common\pugixml.hpp" />
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="DialogVocFormat.h" />
+    <ClInclude Include="DlgVocEdit.h" />
     <ClInclude Include="FileUtility.h" />
     <ClInclude Include="FileUtilityDoc.h" />
     <ClInclude Include="FileUtilityView.h" />
@@ -130,6 +134,7 @@
     <ClCompile Include="..\common\pugixml.cpp" />
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="DialogVocFormat.cpp" />
+    <ClCompile Include="DlgVocEdit.cpp" />
     <ClCompile Include="FileUtility.cpp" />
     <ClCompile Include="FileUtilityDoc.cpp" />
     <ClCompile Include="FileUtilityView.cpp" />

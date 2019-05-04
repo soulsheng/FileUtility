@@ -392,3 +392,13 @@ bool CFileUtilitySTL::convertString(StringVec& lines, StringVec& linesOut, tstri
 
 	return true;
 }
+
+tstring CFileUtilitySTL::getFileExt(tstring& fullpath)
+{
+	int indexEnd = fullpath.find_last_of(_T("."));
+	tstring str = fullpath.substr(indexEnd + 1);
+
+	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+
+	return str;
+}
