@@ -84,6 +84,9 @@
     <ClInclude Include="DlgVocEdit.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DlgVocGenTrainList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileUtility.cpp">
@@ -135,6 +138,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DlgVocEdit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgVocGenTrainList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

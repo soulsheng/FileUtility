@@ -86,6 +86,7 @@
 #define IDS_EDIT_MENU                   306
 #define IDD_DIALOG_VOC                  310
 #define IDD_DLG_VOC_EDIT                312
+#define IDD_DLG_VOC_GEN_TRAIN_LIST      314
 #define IDC_EDIT_VOC_ROOT               1000
 #define IDC_BTN_VOC_ROOT_PATH           1001
 #define IDC_EDIT_CLASS_NAME             1002
@@ -105,6 +106,10 @@
 #define IDC_EDIT1                       1014
 #define IDC_BTN_OPEN_PATH_XML           1015
 #define IDC_COMBO_TYPE_LIST             1017
+#define IDC_BTN_OPEN_PATH               1018
+#define IDC_EDIT2                       1019
+#define IDC_EDIT5                       1020
+#define IDC_COMBO1                      1021
 #define ID_32771                        32771
 #define ID_GENERATE_TRAIN_LIST          32772
 #define ID_32773                        32773
@@ -121,14 +126,15 @@
 #define ID_VOC_XML32784                 32784
 #define ID_VOC_XML_SELECT               32785
 #define ID_VOC_EDIT_TYPE                32786
+#define ID_VOC_GEN_TRAIN_LIST           32787
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32787
-#define _APS_NEXT_CONTROL_VALUE         1018
+#define _APS_NEXT_RESOURCE_VALUE        316
+#define _APS_NEXT_COMMAND_VALUE         32788
+#define _APS_NEXT_CONTROL_VALUE         1022
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

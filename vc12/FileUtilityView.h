@@ -69,6 +69,7 @@ public:
 	afx_msg void OnFileRenameBat();
 	afx_msg void OnVocXmlSelect();
 	afx_msg void OnVocEditType();
+	afx_msg void OnVocGenTrainList();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

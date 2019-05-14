@@ -21,6 +21,7 @@
 
 #include "DialogVocFormat.h"
 #include "DlgVocEdit.h"
+#include "DlgVocGenTrainList.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,6 +46,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(MENU_FILE_RENAME_BAT, &CFileUtilityView::OnFileRenameBat)
 	ON_COMMAND(ID_VOC_XML_SELECT, &CFileUtilityView::OnVocXmlSelect)
 	ON_COMMAND(ID_VOC_EDIT_TYPE, &CFileUtilityView::OnVocEditType)
+	ON_COMMAND(ID_VOC_GEN_TRAIN_LIST, &CFileUtilityView::OnVocGenTrainList)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -486,5 +488,13 @@ void CFileUtilityView::OnVocEditType()
 {
 	// TODO:  在此添加命令处理程序代码
 	DlgVocEdit dlgVoc;
+	dlgVoc.DoModal();
+}
+
+
+void CFileUtilityView::OnVocGenTrainList()
+{
+	// TODO:  在此添加命令处理程序代码
+	DlgVocGenTrainList dlgVoc;
 	dlgVoc.DoModal();
 }

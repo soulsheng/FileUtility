@@ -114,6 +114,7 @@
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="DialogVocFormat.h" />
     <ClInclude Include="DlgVocEdit.h" />
+    <ClInclude Include="DlgVocGenTrainList.h" />
     <ClInclude Include="FileUtility.h" />
     <ClInclude Include="FileUtilityDoc.h" />
     <ClInclude Include="FileUtilityView.h" />
@@ -135,6 +136,7 @@
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="DialogVocFormat.cpp" />
     <ClCompile Include="DlgVocEdit.cpp" />
+    <ClCompile Include="DlgVocGenTrainList.cpp" />
     <ClCompile Include="FileUtility.cpp" />
     <ClCompile Include="FileUtilityDoc.cpp" />
     <ClCompile Include="FileUtilityView.cpp" />

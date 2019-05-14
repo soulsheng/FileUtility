@@ -5,3 +5,6 @@
 *.suo
 /vc12/*.opensdf
 /vc12/*.aps
+/vc12/*.pdb
+/vc12/*.exe
+/vc12/*.ilk
