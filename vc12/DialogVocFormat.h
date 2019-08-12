@@ -44,4 +44,6 @@ protected:
 	CString m_sXmlDir;
 	tstring pathRelativeJpg, pathRelativeXml;
 
+	// trainval or test
+	CString m_voc_subset;
 };

@@ -24,6 +24,7 @@ CDialogVocFormat::CDialogVocFormat(CWnd* pParent /*=NULL*/)
 	, m_sVocVersion(_T("VOC2007"))
 	, m_sJpgDir(_T("JPEGImages"))
 	, m_sXmlDir(_T("Annotations"))
+	, m_voc_subset(_T("trainval"))
 {
 
 }
@@ -43,6 +44,7 @@ void CDialogVocFormat::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_COMBO_VOC_VER, m_sVocVersion);
 	DDX_Text(pDX, IDC_EDIT_JPG_DIR, m_sJpgDir);
 	DDX_Text(pDX, IDC_EDIT_XML_DIR, m_sXmlDir);
+	DDX_CBString(pDX, IDC_COMBO_VOC_SUBSET, m_voc_subset);
 }
 
 
@@ -103,13 +105,23 @@ void CDialogVocFormat::OnBnClickedBtnGetFileId()
 	filelistMix += m_sVocVersion;
 	filelistMix += "\\ImageSets\\Main\\";
 	filelistMix += m_ClassName;
-	filelistMix += "_trainval.txt";
+	if (!m_ClassName.IsEmpty())
+		filelistMix += "_";
+	filelistMix += m_voc_subset.GetBuffer();
+	filelistMix += ".txt";
 
-	StringIDMap	valMap;
-	CFileUtilitySTL::readFilelist(tstring(filelistMix.GetBuffer()), valMap);
+	if (!m_ClassName.IsEmpty())
+	{
+		StringIDMap	valMap;
+		CFileUtilitySTL::readFilelist(tstring(filelistMix.GetBuffer()), valMap);
 
-	m_strVecCurrent.clear();
-	CFileUtilitySTL::selectLableNoEqualMinusOne(valMap, m_strVecCurrent);
+		m_strVecCurrent.clear();
+		CFileUtilitySTL::selectLableNoEqualMinusOne(valMap, m_strVecCurrent);
+	}
+	else
+	{
+		CFileUtilitySTL::readFilelist(tstring(filelistMix.GetBuffer()), m_strVecCurrent);
+	}
 
 	fillListBox(m_strVecCurrent);
 
