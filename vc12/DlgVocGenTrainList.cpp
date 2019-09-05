@@ -68,7 +68,7 @@ void DlgVocGenTrainList::OnBnClickedOk()
 
 	tstring strPathXml = strPathRoot + _T("\\");
 	strPathXml += m_pathXml.GetBuffer();
-
+	strPathXml += _T("\\");
 	StringVec fileListXml;
 	//StringVec fmts;
 	//fmts.push_back(tstring(_T("xml")));
