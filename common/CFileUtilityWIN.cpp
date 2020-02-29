@@ -26,6 +26,14 @@ void CFileUtilityWIN::getFileListFromPath(tstring &path, tstring fmt, std::vecto
 
 }
 
+void CFileUtilityWIN::getFileListFromPath(tstring &path, StringVec &fmts, std::vector<tstring> &list)
+{
+	for each (tstring fmt in fmts)
+	{
+		getFileListFromPath(path, fmt, list);
+	}
+}
+
 void CFileUtilityWIN::getFileListFromPathNest(tstring path, tstring pathSub, StringVec &fmts, std::vector<tstring> &list)
 {
 	tstring csDirPath = path + pathSub + _T("\\*.*");// +fmt;

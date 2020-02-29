@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_VOC_XML_SELECT, &CFileUtilityView::OnVocXmlSelect)
 	ON_COMMAND(ID_VOC_EDIT_TYPE, &CFileUtilityView::OnVocEditType)
 	ON_COMMAND(ID_VOC_GEN_TRAIN_LIST, &CFileUtilityView::OnVocGenTrainList)
+	ON_COMMAND(ID_GET_FILE_LIST_NEST_RAND_ORDER, &CFileUtilityView::OnGetFileListNestRandOrder)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -235,8 +236,12 @@ void CFileUtilityView::outputInfo(const TCHAR* message, int value /*= -1*/)
 	pMFram->FillBuildWindow(os.str());
 }
 
-
 void CFileUtilityView::OnGetFileListNest()
+{
+	kernelGetFileList(true, false);
+}
+
+void CFileUtilityView::kernelGetFileList(bool bNest, bool bRandOrder)
 {
 	// TODO:  在此添加命令处理程序代码
 
@@ -250,16 +255,21 @@ void CFileUtilityView::OnGetFileListNest()
 	StringVec fmts;
 	fmts.push_back(tstring(_T("jpg")));
 	fmts.push_back(tstring(_T("jpeg")));
-	CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), fmts, imageList);
+
+	if (bNest)
+		CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), fmts, imageList);
+	else
+		CFileUtilityWIN::getFileListFromPath(imagePath, fmts, imageList);
 
 	if (imageList.empty())
 		return;
 
+	if (bRandOrder)
+		random_shuffle(imageList.begin(), imageList.end()); /* 打乱顺序 */
+
 	outputInfo(imagePath.c_str());
 	for each (tstring file in imageList)
 	{
-		m_FilesMap.insert(FilesPair(file, imagePath + file));
-
 		outputInfo(file.c_str());
 		AddFileViewBranch(file, imagePath);
 	}
@@ -267,10 +277,10 @@ void CFileUtilityView::OnGetFileListNest()
 	if (!image.IsNull())
 		image.Destroy();
 
-	tstring filepath = imagePath + m_FilesMap.rbegin()->first;
+	tstring filepath = imagePath + imageList[0];
 	image.Load(filepath.c_str());
 
-	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
+	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), imageList);
 }
 
 void CFileUtilityView::AddFileViewBranch(tstring fileNameShort, tstring root)
@@ -323,6 +333,9 @@ int CFileUtilityView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CFileUtilityView::OnGetFileList()
 {
 	// TODO:  在此添加命令处理程序代码
+	kernelGetFileList(false, false);
+
+#if 0
 	tstring		imagePath;
 
 	CFileUtilityWIN::getFilePathFromDialog(imagePath);
@@ -344,6 +357,7 @@ void CFileUtilityView::OnGetFileList()
 	}
 
 	CFileUtilitySTL::writeFilelist(imagePath + _T("filelist.txt"), m_FilesMap);
+#endif
 }
 
 
@@ -497,4 +511,12 @@ void CFileUtilityView::OnVocGenTrainList()
 	// TODO:  在此添加命令处理程序代码
 	DlgVocGenTrainList dlgVoc;
 	dlgVoc.DoModal();
+}
+
+
+void CFileUtilityView::OnGetFileListNestRandOrder()
+{
+	// TODO:  在此添加命令处理程序代码
+	kernelGetFileList(true, true);
+
 }

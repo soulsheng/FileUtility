@@ -51,6 +51,7 @@ public:
 	void	switchBilViewByName(tstring name);
 
 	void	kernelSelectSample(bool rename=false);
+	void	kernelGetFileList(bool bNest, bool bRandOrder);
 
 protected:
 	CImage image;
@@ -70,6 +71,7 @@ public:
 	afx_msg void OnVocXmlSelect();
 	afx_msg void OnVocEditType();
 	afx_msg void OnVocGenTrainList();
+	afx_msg void OnGetFileListNestRandOrder();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

@@ -10,7 +10,8 @@ public:
 
 public:
 	static void getFileListFromPath(tstring &path, tstring fmt, std::vector<tstring> &list);
-	
+	static void getFileListFromPath(tstring &path, StringVec &fmts, std::vector<tstring> &list);
+
 	static void getFileListFromPathNest(tstring path, tstring pathSub, StringVec &fmts, StringVec &list);
 
 	static void getFilePathFromDialog(tstring &path);
