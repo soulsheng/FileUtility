@@ -477,7 +477,11 @@ void CFileUtilityView::OnFileRenameBat()
 
 	std::vector<tstring>		imageList;
 
-	CFileUtilityWIN::getFileListFromPath(imagePath, _T("jpeg"), imageList);
+	//CFileUtilityWIN::getFileListFromPathNest(imagePath, _T("jpeg"), imageList);
+	StringVec fmts;
+	fmts.push_back(tstring(_T("png")));
+	fmts.push_back(tstring(_T("jpg")));
+	CFileUtilityWIN::getFileListFromPathNest(imagePath, _T(""), fmts, imageList);
 
 
 	tstring toPath = imagePath + _T("/select/");
