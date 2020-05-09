@@ -41,7 +41,7 @@ public:
 	static bool		copyFilelist(tstring& fromPath, tstring& toPath, StringVec& fromLines, StringVec& toLines);
 
 	static bool		copyFilelistRename(tstring& fromPath, tstring& toPath, StringIDMap& lines);
-	static bool		copyFilelistRename(tstring& fromPath, tstring& toPath, StringVec& lines);
+	static bool		copyFilelistRename(tstring& fromPath, tstring& toPath, StringVec& lines, tstring pre, bool rename=true);
 
 	static tstring	unfoldRelativePath(tstring path);
 

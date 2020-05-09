@@ -273,7 +273,8 @@ bool CFileUtilitySTL::copyFilelist(tstring& fromPath, tstring& toPath, StringVec
 	return true;
 }
 
-bool CFileUtilitySTL::copyFilelistRename(tstring& fromPath, tstring& toPath, StringVec& lines)
+bool CFileUtilitySTL::copyFilelistRename(tstring& fromPath, tstring& toPath, StringVec& lines,
+	tstring pre, bool rename)
 {
 	StringVec::iterator itr = lines.begin();
 
@@ -281,8 +282,10 @@ bool CFileUtilitySTL::copyFilelistRename(tstring& fromPath, tstring& toPath, Str
 	for (; itr != lines.end(); itr++)
 	{
 		tsstream  os;
-		os << _T("usv") << std::setw(4) << std::setfill(_T('0')) << ++baseIndex << _T(".jpg");
-
+		if (rename)
+			os << pre << std::setw(4) << std::setfill(_T('0')) << ++baseIndex << _T(".jpg");
+		else
+			os << *itr;
 		copyFile(fromPath + *itr, toPath + os.str());
 
 	}

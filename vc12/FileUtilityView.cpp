@@ -488,7 +488,7 @@ void CFileUtilityView::OnFileRenameBat()
 
 	CFileUtilityWIN::createPath(toPath);
 
-	CFileUtilitySTL::copyFilelistRename(imagePath, toPath, imageList);
+	CFileUtilitySTL::copyFilelistRename(imagePath, toPath, imageList, _T("usv"), true);
 
 	outputInfo(_T(""));
 	outputInfo(_T("样本挑选完成！目标目录："));
