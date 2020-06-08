@@ -72,6 +72,7 @@ public:
 	afx_msg void OnVocEditType();
 	afx_msg void OnVocGenTrainList();
 	afx_msg void OnGetFileListNestRandOrder();
+	afx_msg void OnVocXml2Txt();
 };
 
 #ifndef _DEBUG  // FileUtilityView.cpp 中的调试版本

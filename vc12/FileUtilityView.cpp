@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CFileUtilityView, CView)
 	ON_COMMAND(ID_VOC_EDIT_TYPE, &CFileUtilityView::OnVocEditType)
 	ON_COMMAND(ID_VOC_GEN_TRAIN_LIST, &CFileUtilityView::OnVocGenTrainList)
 	ON_COMMAND(ID_GET_FILE_LIST_NEST_RAND_ORDER, &CFileUtilityView::OnGetFileListNestRandOrder)
+	ON_COMMAND(ID_VOC_XML2TXT, &CFileUtilityView::OnVocXml2Txt)
 END_MESSAGE_MAP()
 
 // CFileUtilityView 构造/析构
@@ -523,4 +524,35 @@ void CFileUtilityView::OnGetFileListNestRandOrder()
 	// TODO:  在此添加命令处理程序代码
 	kernelGetFileList(true, true);
 
+}
+
+
+void CFileUtilityView::OnVocXml2Txt()
+{
+	// TODO: 在此添加命令处理程序代码
+	tstring strPathXml = _T("..\\xml\\");
+	tstring filenameWrite = _T("..\\label.txt");
+	tstring filenameWriteUnused = _T("..\\labelUnused.txt");
+
+	StringVec fileListXml;
+	CFileUtilityWIN::getFileListFromPath(strPathXml, _T("xml"), fileListXml);
+
+	StringVec fileListInfo;
+
+	StringVec fileListInfoUnused;
+
+	for each (tstring file in fileListXml)
+	{
+		CFileUtilityXML xmlFileHandler(strPathXml + file);
+
+		tstring line = xmlFileHandler.getStringBBox(_T("face_mask"));
+		if (!line.empty())
+			fileListInfo.push_back(line);
+		else
+			fileListInfoUnused.push_back(file);
+	}
+
+	CFileUtilitySTL::writeFilelist(filenameWrite, fileListInfo);
+	CFileUtilitySTL::writeFilelist(filenameWriteUnused, fileListInfoUnused);
+	AfxMessageBox(_T("SaveList ok"));
 }
