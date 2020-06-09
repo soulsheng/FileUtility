@@ -533,11 +533,12 @@ void CFileUtilityView::OnVocXml2Txt()
 	tstring strPathXml = _T("..\\xml\\");
 	tstring filenameWrite = _T("..\\label.txt");
 	tstring filenameWriteUnused = _T("..\\labelUnused.txt");
+	tstring filenameWriteGT = _T("..\\label_gt.txt");
 
 	StringVec fileListXml;
 	CFileUtilityWIN::getFileListFromPath(strPathXml, _T("xml"), fileListXml);
 
-	StringVec fileListInfo;
+	StringVec labelList, labelListGT;
 
 	StringVec fileListInfoUnused;
 
@@ -545,14 +546,19 @@ void CFileUtilityView::OnVocXml2Txt()
 	{
 		CFileUtilityXML xmlFileHandler(strPathXml + file);
 
-		tstring line = xmlFileHandler.getStringBBox(_T("face_mask"));
+		tstring line, line_gt;
+		xmlFileHandler.getStringBBox(_T("face_mask"), line, line_gt);
 		if (!line.empty())
-			fileListInfo.push_back(line);
+		{
+			labelList.push_back(line);
+			labelListGT.push_back(line_gt);
+		}
 		else
 			fileListInfoUnused.push_back(file);
 	}
 
-	CFileUtilitySTL::writeFilelist(filenameWrite, fileListInfo);
+	CFileUtilitySTL::writeFilelist(filenameWriteGT, labelListGT);
+	CFileUtilitySTL::writeFilelist(filenameWrite, labelList);
 	CFileUtilitySTL::writeFilelist(filenameWriteUnused, fileListInfoUnused);
 	AfxMessageBox(_T("SaveList ok"));
 }

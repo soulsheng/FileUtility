@@ -13,10 +13,11 @@ public:
 	static bool findObjectNames(tstring& file, StringVec& strVec);
 	static bool editObjectNames(tstring fileIn, tstring fileOut, tstring str);
 	
-	tstring getStringBBox(tstring str = _T("face"));
+	bool getStringBBox(tstring str, tstring& line, tstring& line_gt);
 
 protected:
 	tstring getNodeValueAll(pugi::xml_node node);
+	tstring xy2wh(tstring& val);
 
 protected:
 	pugi::xml_document doc;

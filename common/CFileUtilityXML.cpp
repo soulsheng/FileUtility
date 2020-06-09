@@ -43,12 +43,36 @@ bool CFileUtilityXML::editObjectNames(tstring fileIn, tstring fileOut, tstring s
 	return true;
 }
 
-tstring CFileUtilityXML::getStringBBox(tstring str)
+tstring CFileUtilityXML::xy2wh(tstring& val)
 {
-	tstring line;
+	tstring val_wh;
+	StringVec vals = CFileUtilitySTL::split(val, _T(" "));
+	int nRect[4];
+	for (int i = 0; i < 4; i++)
+	{
+		nRect[i] = _ttoi(vals[i].c_str());
+	}
 
+	TCHAR buffer[7];
+	_itot(nRect[2] - nRect[0], buffer, 10);
+	vals[2] = buffer;
+
+	_itot(nRect[3] - nRect[1], buffer, 10);
+	vals[3] = buffer;
+
+	for (int i = 0; i < 4; i++)
+	{
+		val_wh += vals[i] + _T(" ");
+	}
+
+	return val_wh;
+}
+
+bool CFileUtilityXML::getStringBBox(tstring str, tstring& line, tstring& line_gt)
+{
 	pugi::xml_node node = doc.child(_T("annotation")).child(_T("object"));
 
+	int numBBox = 0;
 	while (node)
 	{
 		tstring obj_name = tstring(node.child(_T("name")).first_child().value());
@@ -56,20 +80,33 @@ tstring CFileUtilityXML::getStringBBox(tstring str)
 		{
 			//node.child(_T("name")).first_child().set_value(str.c_str());
 			tstring val = getNodeValueAll( node.child(_T("bndbox") ));
-			line += val + _T(" ");
+			line += val;
+
+			line_gt += _T("\n");;
+			line_gt += xy2wh(val);
+			line_gt += _T("0 0 0 0 0 0");;
+
+			numBBox++;
 		}
 
 		node = node.next_sibling();
 	}
 
 	if (line.empty())
-		return tstring();
+		return false;
 
 	node = doc.child(_T("annotation")).child(_T("filename"));
 	tstring filename = node.first_child().value();
 
 	line = CFileUtilitySTL::getOnlyFileName(filename) + _T(" ") + line;
-	return line;
+
+	tsstream os;
+	os << filename << std::endl
+		<< numBBox << line_gt;
+
+	line_gt = os.str();
+
+	return true;
 }
 
 tstring CFileUtilityXML::getNodeValueAll(pugi::xml_node node)

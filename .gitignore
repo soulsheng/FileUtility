@@ -8,3 +8,4 @@
 /vc12/*.pdb
 /vc12/*.exe
 /vc12/*.ilk
+*xml
