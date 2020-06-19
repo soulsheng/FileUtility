@@ -13,7 +13,7 @@ public:
 	static bool findObjectNames(tstring& file, StringVec& strVec);
 	static bool editObjectNames(tstring fileIn, tstring fileOut, tstring str);
 	
-	bool getStringBBox(tstring str, tstring& line, tstring& line_gt);
+	int getStringBBox(tstring str, tstring& line, tstring& line_gt);
 
 protected:
 	tstring getNodeValueAll(pugi::xml_node node);

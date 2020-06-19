@@ -542,12 +542,16 @@ void CFileUtilityView::OnVocXml2Txt()
 
 	StringVec fileListInfoUnused;
 
+	int boxNumTotal = 0;
 	for each (tstring file in fileListXml)
 	{
 		CFileUtilityXML xmlFileHandler(strPathXml + file);
 
 		tstring line, line_gt;
-		xmlFileHandler.getStringBBox(_T("face_mask"), line, line_gt);
+		int boxNum = xmlFileHandler.getStringBBox(_T(""), line, line_gt);//face_mask
+
+		boxNumTotal += boxNum;
+
 		if (!line.empty())
 		{
 			labelList.push_back(line);
@@ -556,6 +560,10 @@ void CFileUtilityView::OnVocXml2Txt()
 		else
 			fileListInfoUnused.push_back(file);
 	}
+
+	tsstream os;
+	os << _T("box num is ") << boxNumTotal;
+	outputInfo(os.str().c_str());
 
 	CFileUtilitySTL::writeFilelist(filenameWriteGT, labelListGT);
 	CFileUtilitySTL::writeFilelist(filenameWrite, labelList);

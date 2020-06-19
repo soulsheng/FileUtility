@@ -68,7 +68,7 @@ tstring CFileUtilityXML::xy2wh(tstring& val)
 	return val_wh;
 }
 
-bool CFileUtilityXML::getStringBBox(tstring str, tstring& line, tstring& line_gt)
+int CFileUtilityXML::getStringBBox(tstring str, tstring& line, tstring& line_gt)
 {
 	pugi::xml_node node = doc.child(_T("annotation")).child(_T("object"));
 
@@ -76,7 +76,7 @@ bool CFileUtilityXML::getStringBBox(tstring str, tstring& line, tstring& line_gt
 	while (node)
 	{
 		tstring obj_name = tstring(node.child(_T("name")).first_child().value());
-		if (str == obj_name)
+		if (str.empty() || str == obj_name)
 		{
 			//node.child(_T("name")).first_child().set_value(str.c_str());
 			tstring val = getNodeValueAll( node.child(_T("bndbox") ));
@@ -106,7 +106,7 @@ bool CFileUtilityXML::getStringBBox(tstring str, tstring& line, tstring& line_gt
 
 	line_gt = os.str();
 
-	return true;
+	return numBBox;
 }
 
 tstring CFileUtilityXML::getNodeValueAll(pugi::xml_node node)
